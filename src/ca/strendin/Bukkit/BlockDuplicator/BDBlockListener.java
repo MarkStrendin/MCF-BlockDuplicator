@@ -8,12 +8,14 @@ import org.bukkit.event.block.BlockRightClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 
-public class BDBlockListener extends BlockListener {
+public class BDBlockListener extends BlockListener {    
+    @SuppressWarnings("unused")
     private final BlockDuplicator plugin;
     
     public BDBlockListener(final BlockDuplicator plugin) {
         this.plugin = plugin;
     }
+    
     
     
     // Modify block data, but only for certain blocks, so we don't bugger anything up
@@ -22,7 +24,7 @@ public class BDBlockListener extends BlockListener {
         
         if ((BDPermissions.tool(event.getPlayer())) && (BDPermissions.dataTool(event.getPlayer()))) {
             // Check if the player is using the special tool
-            if (thePlayer.getItemInHand().getTypeId() == plugin.DuplicatorTool) {
+            if (thePlayer.getItemInHand().getTypeId() == BDCommands.DuplicatorTool) {
                 event.setCancelled(true);
                 
                 Block blockHit = event.getBlock();
@@ -67,29 +69,29 @@ public class BDBlockListener extends BlockListener {
         
         if ((BDPermissions.tool(event.getPlayer())) && (BDPermissions.duplicatorTool(event.getPlayer()))) {
             // Check if the player is using the special tool
-            if (thePlayer.getItemInHand().getTypeId() == plugin.DuplicatorTool) {
+            if (thePlayer.getItemInHand().getTypeId() == BDCommands.DuplicatorTool) {
                 
                 Block blockHit = event.getBlock();
                 
                 // Translate the ID of the block that was hit into the item number that we want to give the player
-                int giveThisItemID = plugin.translateBlockToItemID(blockHit.getTypeId());            
+                int giveThisItemID = BDCommands.translateBlockToItemID(blockHit.getTypeId());            
                 
                 
                 if (thePlayer.getInventory().firstEmpty() < 0) {
                     thePlayer.sendMessage("Your inventory is full!");             
                 } else {
                     // Check if this item is allowed to be duplicated
-                    if (plugin.ThisItemAllowed(blockHit.getTypeId())) {
+                    if (BDCommands.ThisItemAllowed(blockHit.getTypeId())) {
                         
                         ItemStack tobegiven = new ItemStack(giveThisItemID);
                         tobegiven.setAmount(64);
-                        if (plugin.isItemWithDataValue(giveThisItemID)) {
+                        if (BDCommands.isItemWithDataValue(giveThisItemID)) {
                             tobegiven.setDurability(blockHit.getData());                        
                         }
                         
                         //tobegiven.setData(blockHit.getData());
                         
-                        plugin.giveStack(thePlayer,tobegiven);
+                        BDCommands.giveStack(thePlayer,tobegiven);
                         thePlayer.updateInventory();                    
                     } else {
                         thePlayer.sendMessage("Duplicating that block is not allowed");
