@@ -61,6 +61,6 @@ Isn't this the same as VoxelDoop / VoxelMore?
 
 Yes, this plugin's functionality is the same as VoxelDoop and VoxelMore, however this plugin supports permissions.
 
-The server that I run is a hybrid creative/survival server - some players prefer to play survival over creative, but still want to play with friends who prefer to play creative. This plugin gives players the capabilities of the awesome VoxelDoop and VoxelMore plugins, but with the ability to limit it to certain players based on permissions.
+The server that I run is a hybrid creative/survival server - some players prefer to play survival, but still want to play with friends who play creative. This plugin gives players the capabilities of the awesome VoxelDoop and VoxelMore plugins, but with the ability to limit it to certain players based on permissions.
 
 If your server is 100% creative, you should probably be using VoxelMore and VoxelDoop instead, as they are more powerful, and made by people who know more about what they're doing than I do. I have the highest respect for the developers of the VoxelBox plugins, and I don't mean this to be just a blatant ripoff of their work - I simply wanted the functionality of their awesome plugins in the context of server that isn't 100% creative.
