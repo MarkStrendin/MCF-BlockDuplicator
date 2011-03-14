@@ -40,20 +40,6 @@ public class BDPermissions {
             handler = PermissionHandler.NONE;
             BDLogging.sendConsole("Not using permissions");
         }
-        
-        
-        /*
-        Plugin p = server.getPluginManager().getPlugin("GroupManager");
-        if (p != null) {
-            if (!server.getPluginManager().isPluginEnabled(p)) {
-                server.getPluginManager().enablePlugin(p);
-            }
-            GroupManager gm = (GroupManager) p;
-            WorldsHolder wd = gm.getWorldsHolder();
-        } else {
-            this.getPluginLoader().disablePlugin(this);
-        }
-        */
     }
     
     private static boolean hasPermission(Player thisplayer, String permName, boolean defaultPermission) {
@@ -71,15 +57,15 @@ public class BDPermissions {
     }
     
     public static boolean more(Player player) {
-        return hasPermission(player,"blockduplicator.more",true);         
+        return hasPermission(player,"blockduplicator.commands.more",true);         
     }
     
     public static boolean clearinv(Player player) {
-        return hasPermission(player,"blockduplicator.clearinv",true);
+        return hasPermission(player,"blockduplicator.commands.clearinv",true);
     }
     
     public static boolean pick(Player player) {
-        return hasPermission(player,"blockduplicator.pick",true);
+        return hasPermission(player,"blockduplicator.commands.pick",true);
     }
     
     public static boolean tool(Player player) {
