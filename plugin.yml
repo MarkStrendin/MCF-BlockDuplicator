@@ -1,6 +1,6 @@
 name: BlockDuplicator
 main: ca.strendin.Bukkit.BlockDuplicator.BlockDuplicator
-version: 0.1
+version: 0.2
 website: http://forums.bukkit.org
 authors:
   - Mark Strendin
