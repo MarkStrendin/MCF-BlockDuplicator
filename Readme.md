@@ -3,7 +3,7 @@ BlockDuplicator
 
 This bukkit plugin can be used to easily duplicate blocks.
 
-Most recent CraftBukkit version tested with: 531
+Most recent CraftBukkit version tested with: 554
 
 Usage
 -----
