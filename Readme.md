@@ -38,6 +38,9 @@ Commands
 
 Permissions
 -----------
+
+Supports GroupManager and Permissions - tested with GroupManager 1.0-alpha-5 and Permissions 2.5.4
+
     blockduplicator.commands.more       Access to the /more command (and aliases)
     blockduplicator.commands.clearinv   Access to the /clearinv command (and aliases)
     blockduplicator.commands.pick       Access to the /pick command (and aliases)

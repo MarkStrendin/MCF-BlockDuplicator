@@ -29,7 +29,6 @@ public class BDBlockListener extends BlockListener {
                 
                 Block blockHit = event.getBlock();
                 
-                           
                 // Check if this is a block that we want to modify
                 
                 int MaxData = -1;
