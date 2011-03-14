@@ -1,0 +1,28 @@
+name: BlockDuplicator
+main: ca.strendin.Bukkit.BlockDuplicator.BlockDuplicator
+version: 0.1
+website: http://forums.bukkit.org
+authors:
+  - Mark Strendin
+description: Duplicates blocks
+commands:
+  clearinv:
+    aliases: [ci]
+    description: Clears your inventory
+    usage: |
+           /<command>
+  more:
+    aliases: [m]
+    description: Gives you more of what you are holding
+    usage: |
+           /<command> [stacks]  
+  pick:
+    aliases: [p]
+    description: Sets the data value of what you are holding in your hand
+    usage: |
+           /<command> [value]
+  duper:
+    aliases: []
+    description: Gives you the duplicator tool
+    usage: |
+           /<command>      
