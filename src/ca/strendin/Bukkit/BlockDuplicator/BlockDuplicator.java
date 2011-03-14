@@ -14,7 +14,11 @@ public class BlockDuplicator extends JavaPlugin {
     private final BDBlockListener blockListener = new BDBlockListener(this);
     
 
-    
+    @Override
+    public void onLoad() {
+        // TODO Auto-generated method stub
+        
+    }   
        
     
     @Override
@@ -74,5 +78,7 @@ public class BlockDuplicator extends JavaPlugin {
         }
         
         return true;        
-    }   
+    }
+
+
 }
