@@ -11,26 +11,34 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
+
 public class BlockDuplicator extends JavaPlugin {
     private final BDBlockListener blockListener = new BDBlockListener(this);
+    
+    
 
     // Load these from a config file at some point
     public int DuplicatorTool = 281;    
     public int[] denied_blocks = {7,8,9,10,11,14,15,16,21,56,51,52,73,74};
     
-    
+    private ChatColor BDChatColor = ChatColor.AQUA;
        
     
     @Override
-    public void onDisable() {
-        System.out.println("BlockDuplicator disabled!");
+    public void onDisable() {        
+        System.out.println(this.getDescription().getName() + " disabled");
         
     }
 
     @Override
-    public void onEnable() {
-        System.out.println("BlockDuplicator enabled!");
+    public void onEnable() {  
+
         
+        // Permissions
+        BDPermissions.initPermissions(getServer());
+
+        System.out.println(this.getDescription().getName() + " v" + this.getDescription().getVersion() + " enabled");
+
         // Register events
         PluginManager pm = getServer().getPluginManager();        
         pm.registerEvent(Event.Type.BLOCK_RIGHTCLICKED, blockListener, Priority.Normal, this);
@@ -43,27 +51,40 @@ public class BlockDuplicator extends JavaPlugin {
             // If the sender is a player
             Player requestplayer = (Player)sender;
         
-            if ((commandLabel.equalsIgnoreCase("clearinv")) ||
-                    (commandLabel.equalsIgnoreCase("ci"))) {                
-                handleClearInvCmd(requestplayer);                
-            } else if ((commandLabel.equalsIgnoreCase("more")) ||
-                    (commandLabel.equalsIgnoreCase("m"))) {                
-                handleMoreCmd(requestplayer,args);
-            } else if ((commandLabel.equalsIgnoreCase("pick")) ||
-                    (commandLabel.equalsIgnoreCase("p"))) {                
-                handlePickCmd(requestplayer,args);                
+            if ((commandLabel.equalsIgnoreCase("clearinv")) || (commandLabel.equalsIgnoreCase("ci"))) {
+                if (BDPermissions.clearinv(requestplayer)) {
+                    handleClearInvCmd(requestplayer);
+                } else {                    
+                    BDLogging.permDenyMsg(requestplayer);
+                }
+            } else if ((commandLabel.equalsIgnoreCase("more")) || (commandLabel.equalsIgnoreCase("m"))) {                
+                if (BDPermissions.more(requestplayer)) {
+                    handleMoreCmd(requestplayer,args);
+                } else {                    
+                    BDLogging.permDenyMsg(requestplayer);
+                }
+            } else if ((commandLabel.equalsIgnoreCase("pick")) || (commandLabel.equalsIgnoreCase("p"))) {                
+                if (BDPermissions.pick(requestplayer)) {
+                    handlePickCmd(requestplayer,args);
+                } else {                    
+                    BDLogging.permDenyMsg(requestplayer);
+                }               
             } else if (commandLabel.equalsIgnoreCase("duper")) {                
-                givePlayerDuplicatorTool(requestplayer);
+                if (BDPermissions.tool(requestplayer)) {
+                    givePlayerDuplicatorTool(requestplayer);
+                } else {                    
+                    BDLogging.permDenyMsg(requestplayer);
+                }
             }
-            
         } else {
-            System.out.println("Players only, sorry!");
+            BDLogging.sendConsole("This command is designed for players only");            
         }
         
-        
-        return true;
-        
+        return true;        
     }
+        
+    
+    
     
     /*
      * Checks to see if the item is on the allowed list
@@ -115,7 +136,7 @@ public class BlockDuplicator extends JavaPlugin {
             toThisPlayer.getInventory().addItem(tobegiven);            
         }
         
-        toThisPlayer.sendMessage("Giving (" + numStacks + " x 64) of " + thisItemID.getType());
+        toThisPlayer.sendMessage(BDChatColor + "Giving (" + numStacks + " x 64) of " + thisItemID.getType());        
         
         return true;
     }
@@ -163,7 +184,7 @@ public class BlockDuplicator extends JavaPlugin {
      */
     public boolean handleClearInvCmd(Player thisplayer) {
         thisplayer.getInventory().clear();
-        thisplayer.sendMessage("Inventory cleared!");
+        thisplayer.sendMessage(BDChatColor + "Inventory cleared!");
         return true;
     }
     
@@ -219,7 +240,7 @@ public class BlockDuplicator extends JavaPlugin {
     public boolean handlePickCmd(Player thisplayer,String[] args) {
         
         int newDataValue = 0;
-        
+
         if (args.length > 0) {
             newDataValue = Integer.parseInt(args[0].trim());
         }
@@ -240,13 +261,10 @@ public class BlockDuplicator extends JavaPlugin {
         case 18: MaxData = 2; break;
         }
         
-        
+        /* 
+         * If everything seems sane, change the data value
+         */
         if ((newDataValue <= MaxData) && (newDataValue >= 0)) {
-            thisplayer.sendMessage("Attempting to set data to " + newDataValue);
-            
-            ItemStack playerHolding = thisplayer.getItemInHand();
-            
-            thisplayer.sendMessage("You are weilding: " + playerHolding.getType() + " (id:"+playerHolding.getTypeId()+") (Amnt: "+playerHolding.getAmount()+") (data: "+playerHolding.getDurability()+")");
             thisplayer.getItemInHand().setDurability((short) newDataValue);
         }
         return true;
