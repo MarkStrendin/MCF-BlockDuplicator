@@ -18,7 +18,7 @@ public class BlockDuplicator extends JavaPlugin {
     
 
     // Load these from a config file at some point
-    public int DuplicatorTool = 281;    
+    public int DuplicatorTool = 275;    
     public int[] denied_blocks = {7,8,9,10,11,14,15,16,21,56,51,52,73,74};
     
     private ChatColor BDChatColor = ChatColor.AQUA;
