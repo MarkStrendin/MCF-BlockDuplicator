@@ -35,7 +35,7 @@ Commands
 Isn't this the same as VoxelDoop / VoxelMore?
 ---------------------------------------------
 
-Yes, this plugin's functionality is the same as VoxelDoop and VoxelMore, however this plugin supports permissions (currently in the form of GroupManager).
+Yes, this plugin's functionality is the same as VoxelDoop and VoxelMore, however this plugin supports permissions (currently in the form of GroupManager - this is a work in progress).
 
 The server that I run is a hybrid creative/survival server - some players prefer to play survival over creative, but still want to play with friends who prefer to play creative. This plugins gives players the capabilities of the awesome VoxelDoop and VoxelMore plugins, but with the ability to limit it to certain players based on permissions.
 
