@@ -13,17 +13,19 @@ public class BDTool {
         
         int MaxData = -1;
         switch (block.getTypeId()) {
-        case 44: MaxData = 3; break;
-        case 43: MaxData = 3; break;
-        case 17: MaxData = 2; break;
-        case 35: MaxData = 15; break;   
-        case 53: MaxData = 3; break;   
-        case 67: MaxData = 3; break;
-        case 18: MaxData = 2; break;
+        case 44: MaxData = 3; break;    // Double steps
+        case 43: MaxData = 3; break;    // Single steps
+        case 17: MaxData = 2; break;    // Logs
+        case 35: MaxData = 15; break;   // Wool
+        case 53: MaxData = 3; break;    // Wooden stairs
+        case 67: MaxData = 3; break;    // Cobblestone stairs
+        case 18: MaxData = 2; break;    // Leaves
+        case 86: MaxData = 3; break;    // Pumpkins (changes direction)
+        case 91: MaxData = 3; break;    // Jack-o-lanterns (changes direction)
         }
         
         // If the block ID was on the list, go ahead and cycle it's data
-        if (MaxData > -1) {
+        if (MaxData > 0) {
             int setDataTo = block.getData();
             setDataTo++;
             if (setDataTo > MaxData) {
