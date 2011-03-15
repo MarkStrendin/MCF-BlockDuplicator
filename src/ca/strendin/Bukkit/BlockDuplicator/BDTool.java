@@ -25,7 +25,7 @@ public class BDTool {
         }
         
         // If the block ID was on the list, go ahead and cycle it's data
-        if (MaxData > 0) {
+        if (MaxData >= 0) {
             int setDataTo = block.getData();
             setDataTo++;
             if (setDataTo > MaxData) {
