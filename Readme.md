@@ -28,12 +28,13 @@ The data-changing abilities of this plugin do not adhere to regions protected by
 
 Commands
 --------
-    /duper         Gives the player the duplicator tool
-    /clearinv      Clears the player's inventory
-    /ci            Same as /clearinv
-    /more          Gives the player duplicate stacks of whatever he/she is holding (ex: "/m 4" would give you 4 additional stacks)
-    /m             Same as /more
-    /pick          Allows the player to change the data value of the item in their hand (for wool colors, single step types, etc)
+    /blockduplicator	Reloads the config file
+    /duper         		Gives the player the duplicator tool
+    /clearinv      		Clears the player's inventory
+    /ci            		Same as /clearinv
+    /more          		Gives the player duplicate stacks of whatever he/she is holding (ex: "/m 4" would give you 4 additional stacks)
+    /m             		Same as /more
+    /pick          		Allows the player to change the data value of the item in their hand (for wool colors, single step types, etc)
 
 
 Permissions
@@ -44,9 +45,11 @@ Supports GroupManager and Permissions - tested with GroupManager 1.0-alpha-5 and
     blockduplicator.commands.more       Access to the /more command (and aliases)
     blockduplicator.commands.clearinv   Access to the /clearinv command (and aliases)
     blockduplicator.commands.pick       Access to the /pick command (and aliases)
-    blockduplicator.tool.tool           Access to the /duper command to summon the tool
+    blockduplicator.tool.summon         Access to the /duper command to summon the tool(s)
     blockduplicator.tool.data           Access to the data changer portion of the tool (left click)
     blockduplicator.tool.duplicator     Access to the duplicator portion of the tool (right click)
+    blockduplicator.tool.ink			Access to the not-yet-complete ink tool
+    blockduplicator.reload				Access to the /blockduplicator command, used to reload the config file
 
 If you only want users to be able to use the commands:
 
@@ -59,8 +62,24 @@ If you only want users to be able to use the tool:
 Isn't this the same as VoxelDoop / VoxelMore?
 ---------------------------------------------
 
-Yes, this plugin's functionality is the same as VoxelDoop and VoxelMore, however this plugin supports permissions.
+Yes, this plugin's functionality is the same as VoxelDoop and VoxelMore, however this plugin supports permissions. When Bukkit's built-in permissions become available, and the VoxelBox team updates their plugins to support it, this plugin will no longer be necessary.
 
 The server that I run is a hybrid creative/survival server - some players prefer to play survival, but still want to play with friends who play creative. This plugin gives players the capabilities of the awesome VoxelDoop and VoxelMore plugins, but with the ability to limit it to certain players based on permissions.
 
-If your server is 100% creative, you should probably be using VoxelMore and VoxelDoop instead, as they are more powerful, and made by people who know more about what they're doing than I do. I have the highest respect for the developers of the VoxelBox plugins, and I don't mean this to be just a blatant ripoff of their work - I simply wanted the functionality of their awesome plugins in the context of server that isn't 100% creative.
+If your server is 100% creative, you should probably be using VoxelMore and VoxelDoop instead, as they are more powerful, and made by people who know more about what they're doing than I do.
+
+
+Changelog
+---------
+
+**v0.2**
+
+ - Added support for a config file
+
+**v0.1**
+
+ - Added support for Permissions and GroupManager (Will favour GroupManager) 
+
+**v0.0**
+
+ - Initial release

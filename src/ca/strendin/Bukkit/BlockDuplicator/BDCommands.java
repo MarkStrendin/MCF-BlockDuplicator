@@ -1,18 +1,22 @@
 package ca.strendin.Bukkit.BlockDuplicator;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class BDCommands {
     
     // Load these from a config file at some point
-    public static int DuplicatorTool = 275;    
-    public static int[] denied_blocks = {7,8,9,10,11,14,15,16,21,56,51,52,73,74};
+    public static int DuplicatorTool = 275;
+    public static int PaintBrushTool = 341;
+    //public static int[] denied_blocks;
+    public static ArrayList<Integer> denied_blocks = new ArrayList<Integer>();
     
-    
-    public static boolean Testing(int thisthing) {
-     return true;
-    }
     
     /*
      * Clears the player's inventory
@@ -134,10 +138,9 @@ public class BDCommands {
     }
     
     /*
-     * Checks to see if this item is one that has a special data value
+     * Checks to see if this item is one that has a special data value, to
+     *  determine if we should be copying its data field
      * 
-     * TODO: Check to see if this is even necesary anymore...
-     *  We should probably always copy the data value of whatever we're copying 
      */
     public static boolean isItemWithDataValue(int checkThisItemID) {
         boolean returnMe = false;
@@ -148,6 +151,7 @@ public class BDCommands {
         case 35: returnMe = true; break; // wool
         case 53: returnMe = true; break; //wood step    
         case 67: returnMe = true; break; // stone step
+        
         // Leaves don't work so well
         //case 18: returnMe = true; break; // leaves   
         }
@@ -159,8 +163,6 @@ public class BDCommands {
      */
     public static void givePlayerDuplicatorTool (Player thisPlayer) {
         ItemStack DuplicatorToolItem = new ItemStack(DuplicatorTool,(short)1,(byte)0);
-        
-                
         thisPlayer.getInventory().addItem(DuplicatorToolItem);
     }
 
@@ -189,5 +191,81 @@ public class BDCommands {
         }        
         return returnMe;
     }
+    
+    
+    /* 
+     * This probably shouldn't be in the code itself, but until I find a 
+     *  better way of doing this, it will have to do
+     */
+    public static void writeDefaultConfigFile(File thisfile) throws IOException {
+        
+        BufferedWriter fB = new BufferedWriter(new FileWriter(thisfile));        
+        fB.write("#");
+        fB.newLine();
+        fB.write("# BlockDuplicator configuration file");
+        fB.newLine();
+        fB.write("#"); 
+        fB.newLine();
+        fB.newLine();
+        fB.newLine();
+        fB.write("# Duplicator tool");
+        fB.newLine();
+        fB.write("#");
+        fB.newLine();
+        fB.write("# The item with this ID number will be used as");
+        fB.newLine();
+        fB.write("# the duplicator tool. DEFAULT IS 275 (Stone Axe)");
+        fB.newLine();
+        fB.write("#");
+        fB.newLine();
+        fB.write("#  Right clicking will give the player a stack of the");
+        fB.newLine();
+        fB.write("#   type of block clicked");
+        fB.newLine();
+        fB.write("#");
+        fB.newLine();
+        fB.write("#  Left clicking will cycle the block's data field");
+        fB.newLine();
+        fB.newLine();
+        fB.write("duplicatortoolid = 275");
+        fB.newLine();
+        fB.newLine();
+        fB.newLine();
+        fB.write("# Paintbrush tool");
+        fB.newLine();
+        fB.write("#");
+        fB.newLine();
+        fB.write("# The item with this ID number will be used as");
+        fB.newLine();
+        fB.write("# the paintbrush tool. DEFAULT IS 341 (Slime Ball)");
+        fB.newLine();
+        fB.write("#");
+        fB.newLine();
+        fB.write("#  Right clicking will \"copy\" the block hit with the tool");
+        fB.newLine();
+        fB.write("#");
+        fB.newLine();
+        fB.write("#  Left clicking will \"paste\" the copied block onto");
+        fB.newLine();
+        fB.write("#   the clicked block");
+        fB.newLine();
+        fB.newLine();
+        fB.write("paintbrushtoolid = 341");
+        fB.newLine();
+        fB.newLine();
+        fB.newLine();
+        fB.write("# Denied Items");
+        fB.newLine();
+        fB.write("#");
+        fB.newLine();
+        fB.write("# These items are not allowed to be duplicated");
+        fB.newLine();
+        fB.newLine();
+        fB.write("blacklist = 7,8,9,10,11,51,52,79");
+        fB.close();
+        
+    }
+    
+    
 
 }

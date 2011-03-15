@@ -80,5 +80,17 @@ public class BDPermissions {
         return hasPermission(player,"blockduplicator.tool.duplicator",true);
     }
     
+    public static boolean inkTool(Player player) {
+        return hasPermission(player,"blockduplicator.tool.ink",true);
+    }
+    
+    public static boolean canReload(Player player) {
+        return hasPermission(player,"blockduplicator.reload",true);
+    }
+    
+    
+    
+    
+    
     
 }

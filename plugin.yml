@@ -25,4 +25,9 @@ commands:
     aliases: []
     description: Gives you the duplicator tool
     usage: |
-           /<command>      
+           /<command>   
+  blockduplicator:
+    aliases: []
+    description: Reloads the configuration file
+    usage: |
+           /<command>              
