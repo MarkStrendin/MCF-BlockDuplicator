@@ -9,7 +9,7 @@ public class BDLogging {
     
     public static final Logger log = Logger.getLogger("Minecraft");
     
-    private static ChatColor normalColor = ChatColor.AQUA;
+    private static ChatColor normalColor = ChatColor.DARK_GREEN;
     private static ChatColor errorColor = ChatColor.RED;
     
    

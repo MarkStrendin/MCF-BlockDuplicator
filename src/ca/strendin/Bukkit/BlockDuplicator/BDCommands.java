@@ -19,7 +19,7 @@ public class BDCommands {
     /*
      * These blocks play nicely with the paint tool    
      */
-    private static int[] PaintSafeBlocks = {1,2,3,4,5,12,13,14,15,16,17,18,19,20,21,22,23,24,25,35,41,42,43,44,45,47,48,49,53,54,56,57,58,60,61,62,67,73,74,78,80,82,84,85,86,87,88,89,91,92};
+    private static int[] PaintSafeBlocks = {1,2,3,4,5,12,13,14,15,16,17,18,19,20,21,22,23,24,25,35,41,42,43,44,45,47,48,49,53,54,56,57,58,60,61,62,67,73,74,80,82,84,85,86,87,88,89,91,92};
     
     //public static int[] denied_blocks;
     public static ArrayList<Integer> denied_blocks = new ArrayList<Integer>();
