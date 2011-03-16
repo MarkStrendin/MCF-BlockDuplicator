@@ -1,6 +1,6 @@
 name: BlockDuplicator
 main: ca.strendin.Bukkit.BlockDuplicator.BlockDuplicator
-version: 0.2
+version: 0.3
 website: http://forums.bukkit.org
 authors:
   - Mark Strendin
@@ -17,15 +17,25 @@ commands:
     usage: |
            /<command> [stacks]  
   pick:
-    aliases: [p]
+    aliases: []
     description: Sets the data value of what you are holding in your hand
     usage: |
            /<command> [value]
-  duper:
-    aliases: []
+  duplicator:
+    aliases: [duper]
     description: Gives you the duplicator tool
     usage: |
-           /<command>   
+           /<command> 
+  paintbrush:
+    aliases: [painter]
+    description: Gives you the paintbrush tool
+    usage: |
+           /<command>
+  bdtools:
+    aliases: [btd]
+    description: Gives you the duplicator and paintbrush tools
+    usage: |
+           /<command>
   blockduplicator:
     aliases: []
     description: Reloads the configuration file

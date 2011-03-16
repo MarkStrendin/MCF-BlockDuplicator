@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,6 +15,12 @@ public class BDCommands {
     // Load these from a config file at some point
     public static int DuplicatorTool = 275;
     public static int PaintBrushTool = 341;
+
+    /*
+     * These blocks play nicely with the paint tool    
+     */
+    private static int[] PaintSafeBlocks = {1,2,3,4,5,12,13,14,15,16,17,18,19,20,21,22,23,24,25,35,41,42,43,44,45,47,48,49,53,54,56,57,58,60,61,62,67,73,74,78,80,82,84,85,86,87,88,89,91,92};
+    
     //public static int[] denied_blocks;
     public static ArrayList<Integer> denied_blocks = new ArrayList<Integer>();
     
@@ -165,6 +172,14 @@ public class BDCommands {
         ItemStack DuplicatorToolItem = new ItemStack(DuplicatorTool,(short)1,(byte)0);
         thisPlayer.getInventory().addItem(DuplicatorToolItem);
     }
+    
+    /*
+     * Gives the player a paintbrush
+     */
+    public static void givePlayerPaintbrushTool(Player thisPlayer) {
+        ItemStack DuplicatorToolItem = new ItemStack(PaintBrushTool,(short)1,(byte)0);
+        thisPlayer.getInventory().addItem(DuplicatorToolItem);
+    }
 
     
     /* Translates a block ID into an item ID for certain
@@ -190,6 +205,31 @@ public class BDCommands {
         case 43: returnMe = 44; break; // Convert double steps to single steps (only pick up single steps)
         }        
         return returnMe;
+    }
+    
+    
+    public static boolean isPaintableBlock(Block block) {
+        
+        boolean returnMe = false;
+        int blockid = block.getTypeId();
+        
+        for (int x : PaintSafeBlocks) {
+            if (x == blockid) {
+                returnMe = true;
+            }
+        }        
+        return returnMe;     
+    }
+    
+    public static boolean isPaintableBlock(int blockid) {
+        boolean returnMe = false;
+        
+        for (int x : PaintSafeBlocks) {
+            if (x == blockid) {
+                returnMe = true;
+            }
+        }        
+        return returnMe;        
     }
     
     
@@ -265,6 +305,7 @@ public class BDCommands {
         fB.close();
         
     }
+
     
     
 

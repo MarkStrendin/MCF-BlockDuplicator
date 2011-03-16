@@ -15,7 +15,11 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BlockDuplicator extends JavaPlugin {
+    
     private final BDBlockListener blockListener = new BDBlockListener(this);
+    private final BDPlayerListener playerListener = new BDPlayerListener(this);
+    
+    
     private static String configFileName = "BlockDuplicator.config";  
     public static Properties configSettings = new Properties();
     
@@ -55,7 +59,8 @@ public class BlockDuplicator extends JavaPlugin {
         // Register events
         PluginManager pm = getServer().getPluginManager();        
         pm.registerEvent(Event.Type.BLOCK_RIGHTCLICKED, blockListener, Priority.Normal, this);
-        pm.registerEvent(Event.Type.BLOCK_DAMAGED, blockListener, Priority.Normal, this);    
+        pm.registerEvent(Event.Type.BLOCK_DAMAGED, blockListener, Priority.Normal, this);
+        pm.registerEvent(Event.Type.PLAYER_QUIT, this.playerListener, Event.Priority.Normal, this);
     }
     
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args ) {
@@ -65,29 +70,42 @@ public class BlockDuplicator extends JavaPlugin {
             Player requestplayer = (Player)sender;
         
             if ((commandLabel.equalsIgnoreCase("clearinv")) || (commandLabel.equalsIgnoreCase("ci"))) {
-                if (BDPermissions.clearinv(requestplayer)) {
+                if (BDPermissions.canUseClearInvCommand(requestplayer)) {
                     BDCommands.handleClearInvCmd(requestplayer);
                 } else {                    
                     BDLogging.permDenyMsg(requestplayer);
                 }
             } else if ((commandLabel.equalsIgnoreCase("more")) || (commandLabel.equalsIgnoreCase("m"))) {                
-                if (BDPermissions.more(requestplayer)) {
+                if (BDPermissions.canUseMoreCommand(requestplayer)) {
                     BDCommands.handleMoreCmd(requestplayer,args);
                 } else {                    
                     BDLogging.permDenyMsg(requestplayer);
                 }
             } else if ((commandLabel.equalsIgnoreCase("pick")) || (commandLabel.equalsIgnoreCase("p"))) {                
-                if (BDPermissions.pick(requestplayer)) {
+                if (BDPermissions.canUsePickCommand(requestplayer)) {
                     BDCommands.handlePickCmd(requestplayer,args);
                 } else {                    
                     BDLogging.permDenyMsg(requestplayer);
                 }               
-            } else if (commandLabel.equalsIgnoreCase("duper")) {                
-                if (BDPermissions.tool(requestplayer)) {
+            } else if ((commandLabel.equalsIgnoreCase("duper")) || (commandLabel.equalsIgnoreCase("duplicator"))) {                
+                if (BDPermissions.canSummonDuplicator(requestplayer)) {
                     BDCommands.givePlayerDuplicatorTool(requestplayer);
                 } else {                    
                     BDLogging.permDenyMsg(requestplayer);
-                }
+                }               
+            } else if ((commandLabel.equalsIgnoreCase("paintbrush")) || (commandLabel.equalsIgnoreCase("painter"))) {                
+                if (BDPermissions.canSummonPaintbrush(requestplayer)) {
+                    BDCommands.givePlayerPaintbrushTool(requestplayer);
+                } else {                    
+                    BDLogging.permDenyMsg(requestplayer);
+                }               
+            } else if ((commandLabel.equalsIgnoreCase("bdtools")) || (commandLabel.equalsIgnoreCase("bdt"))) {                
+                if ((BDPermissions.canSummonPaintbrush(requestplayer)) && (BDPermissions.canSummonDuplicator(requestplayer))) {
+                    BDCommands.givePlayerDuplicatorTool(requestplayer);
+                    BDCommands.givePlayerPaintbrushTool(requestplayer);
+                } else {                    
+                    BDLogging.permDenyMsg(requestplayer);
+                }                
             } else if (commandLabel.equalsIgnoreCase("blockduplicator")) {
                 if (BDPermissions.canReload(requestplayer)) {
                     // Try to reload the config file
@@ -131,6 +149,17 @@ public class BlockDuplicator extends JavaPlugin {
         try {
             BDCommands.PaintBrushTool = Integer.parseInt(configSettings.getProperty("paintbrushtoolid","341").trim());
         } catch (Exception e) { BDLogging.sendConsole("paintbrushtoolid was set to an insane value - check your config file"); }
+        
+        /*
+         * If the tools are set to the same item, use defaults instead
+         */
+        if (BDCommands.PaintBrushTool == BDCommands.DuplicatorTool) {
+            BDLogging.sendConsole("Paintbrush tool and duplicator tool cannot be set to the same item");
+            BDLogging.sendConsole(" using 275 for duplicator tool");
+            BDCommands.DuplicatorTool = 275;
+            BDLogging.sendConsole(" using 341 for paintbrush tool");
+            BDCommands.PaintBrushTool = 341;            
+        }
         
         /*
          * 7 - bedrock

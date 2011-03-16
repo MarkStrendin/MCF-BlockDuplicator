@@ -1,5 +1,6 @@
 package ca.strendin.Bukkit.BlockDuplicator;
 
+/* import org.bukkit.block.Block; */
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockListener;
@@ -13,27 +14,53 @@ public class BDBlockListener extends BlockListener {
         this.plugin = plugin;
     }
 
+
+    /*
+     * Left clicking a block 
+     */
     public void onBlockDamage(BlockDamageEvent event) {        
-        Player thePlayer = event.getPlayer();
+        Player thePlayer = event.getPlayer();        
         
-        if ((BDPermissions.tool(event.getPlayer())) && (BDPermissions.dataTool(event.getPlayer()))) {
-            // Check if the player is using the special tool
-            if (thePlayer.getItemInHand().getTypeId() == BDCommands.DuplicatorTool) {
+
+        if (thePlayer.getItemInHand().getTypeId() == BDCommands.DuplicatorTool) {
+            // Duplicator tool
+        
+            // Check permissions before doing anything
+            if (BDPermissions.canUseDataTool(event.getPlayer())) {
                 event.setCancelled(true);
                 BDTool.dataToolHandler(event.getPlayer(),event.getBlock());
             }
-        }   
+            
+            
+        } else if (thePlayer.getItemInHand().getTypeId() == BDCommands.PaintBrushTool) {
+            // Paintbrush tool
+            
+            // TODO: Permissions here
+            BDTool.dataSetterHandler(event.getPlayer(), event.getBlock());
+            
+        }
+        
+        
+        
+        
     }
 
+    /*
+     * Right clicking a block (obviously)
+     */
     public void onBlockRightClick(BlockRightClickEvent event) {
         Player thePlayer = event.getPlayer();
         
-        if ((BDPermissions.tool(event.getPlayer())) && (BDPermissions.duplicatorTool(event.getPlayer()))) {
-            // Check if the player is using the special tool
-            if (thePlayer.getItemInHand().getTypeId() == BDCommands.DuplicatorTool) {                
+        
+        if (thePlayer.getItemInHand().getTypeId() == BDCommands.DuplicatorTool) {
+            // Duplicator tool
+            
+            if (BDPermissions.canUseDuplicatorTool(event.getPlayer())) {
                 BDTool.duplicatorToolHandler(event.getPlayer(), event.getBlock());
             }
                         
+        } else if (thePlayer.getItemInHand().getTypeId() == BDCommands.PaintBrushTool) {
+            BDTool.dataPasteHandler(event.getPlayer(), event.getBlock());
         }
         
                 

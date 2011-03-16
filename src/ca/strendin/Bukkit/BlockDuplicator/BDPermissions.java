@@ -56,32 +56,59 @@ public class BDPermissions {
         }
     }
     
-    public static boolean more(Player player) {
+    public static boolean canUseMoreCommand(Player player) {
         return hasPermission(player,"blockduplicator.commands.more",true);         
     }
     
-    public static boolean clearinv(Player player) {
+    public static boolean canUseClearInvCommand(Player player) {
         return hasPermission(player,"blockduplicator.commands.clearinv",true);
     }
     
-    public static boolean pick(Player player) {
+    public static boolean canUsePickCommand(Player player) {
         return hasPermission(player,"blockduplicator.commands.pick",true);
     }
     
+    /*
     public static boolean tool(Player player) {
-        return hasPermission(player,"blockduplicator.tool.tool",true);
+        return hasPermission(player,"blockduplicator.tools.summon",true);
+    }
+    */
+    
+    public static boolean canSummonDuplicator(Player player) {
+        boolean returnMe = false;
+        
+        if ((hasPermission(player,"blockduplicator.tools.data",true)) || (hasPermission(player,"blockduplicator.tools.duplicator",true))) {
+            returnMe = true;
+        }
+        
+        return returnMe;
+         
     }
     
-    public static boolean dataTool(Player player) {
-        return hasPermission(player,"blockduplicator.tool.data",true);
+    public static boolean canSummonPaintbrush(Player player) {
+        return hasPermission(player,"blockduplicator.tools.paintbrush",true);
     }
     
-    public static boolean duplicatorTool(Player player) {
-        return hasPermission(player,"blockduplicator.tool.duplicator",true);
+    /*
+     * Access to the data-cycler capabilities of the duplicator tool
+     */
+    public static boolean canUseDataTool(Player player) {
+        return hasPermission(player,"blockduplicator.tools.data",true);
     }
     
-    public static boolean inkTool(Player player) {
-        return hasPermission(player,"blockduplicator.tool.ink",true);
+    /*
+     * Access to the duplicator tool
+     */
+    public static boolean canUseDuplicatorTool(Player player) {
+        return hasPermission(player,"blockduplicator.tools.duplicator",true);
+    }
+    
+    
+    /*
+     * Access to the paintbrush tool
+     */
+    public static boolean canUsePaintbrushTool(Player player) {
+        return hasPermission(player,"blockduplicator.tools.paintbrush",true);
     }
     
     public static boolean canReload(Player player) {

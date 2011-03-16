@@ -1,11 +1,87 @@
 package ca.strendin.Bukkit.BlockDuplicator;
 
+import java.util.Hashtable;
+
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class BDTool {
+    
+    // Storage for player block data
+    private static Hashtable<Player,Block> PlayerBlockStorage = new Hashtable<Player,Block>();
+    
+    public final static void removePlayerFromStorageList(Player player) {
+        if (PlayerBlockStorage.containsKey(player)) {
+            PlayerBlockStorage.remove(player);
+        }
+    }
+    
+    public final static void dataSetterHandler(Player player, Block block) {
+        
+        if (BDCommands.isPaintableBlock(block)) {
+        
+            if (PlayerBlockStorage.containsKey(player)) {
+                PlayerBlockStorage.remove(player);            
+            }
+            
+            PlayerBlockStorage.put(player, block);
+            
+            /*
+            player.sendMessage("Storage set to:");            
+            player.sendMessage(" ID: " + block.getType());
+            player.sendMessage(" Name: " + block.getTypeId());
+            player.sendMessage(" Data: " + block.getData());
+             */
+            BDLogging.sendMsg(player,"Ink set to: " + block.getType());
+        } else {
+            BDLogging.sendMsg(player, "Sorry, that block cannot be copied");
+        }
+        
+    
+    }
+    
+    
+    public final static void dataPasteHandler(Player player, Block block ) {
+        
+        if (PlayerBlockStorage.containsKey(player)) {
+            
+            /*
+             *  If the block could not be copied, chances are things will end badly if it
+             *  is possible to paste over it, so only allow pasting over block types that
+             *  are copyable.
+             * 
+             */
+            
+            if (BDCommands.isPaintableBlock(block)) {            
+                Block copiedBlock = PlayerBlockStorage.get(player);
+                
+                if (BDCommands.isPaintableBlock(copiedBlock)) {
+                    /*
+                    player.sendMessage("Would set this block to:");
+                    player.sendMessage(" ID: " + copiedBlock.getType());
+                    player.sendMessage(" Name: " + copiedBlock.getTypeId());
+                    player.sendMessage(" Data: " + copiedBlock.getData());
+                    player.sendMessage(" HashTable size: " + PlayerBlockStorage.size());
+                    */
+                    block.setType(copiedBlock.getType());
+                    block.setData(copiedBlock.getData());
+                }
+            } else {
+                BDLogging.sendMsg(player, "Sorry, that block cannot be overwritten with this tool");                
+            }
+            
+        } else {
+            BDLogging.sendMsg(player,"No data saved for you yet!");
+        }
 
+
+        
+        
+        
+    }
+    
+    
     public final static void dataToolHandler(Player player, Block block) {
         //cBlock blockHit = event.getBlock();
         
@@ -37,6 +113,8 @@ public class BDTool {
             block.setData(setDataToByte);
         }
     }
+    
+    
     
     
     @SuppressWarnings("deprecation")
