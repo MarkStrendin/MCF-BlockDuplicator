@@ -92,8 +92,7 @@ public class BDCommands {
      * Handles the /more command
      * Finishes the player's current stack, and gives them the specified number more stacks
      */
-    public static boolean handleMoreCmd(Player thisplayer,String[] args) {
-        
+    public static boolean handleMoreCmd(Player thisplayer,String[] args) {        
         
         int thisManyStacks = 1;
         
@@ -101,8 +100,14 @@ public class BDCommands {
             thisManyStacks = Integer.parseInt(args[0].trim());
         }
         
-        giveStack(thisplayer,thisplayer.getItemInHand(),thisManyStacks);
-        return true;
+        if (thisplayer.getItemInHand().getTypeId() != 0) {        
+            giveStack(thisplayer,thisplayer.getItemInHand(),thisManyStacks);
+            return true;
+        } else {
+            return false;
+        }
+        
+        
     }
     
     /*
