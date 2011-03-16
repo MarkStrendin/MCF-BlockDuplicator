@@ -37,7 +37,7 @@ commands:
     usage: |
            /<command>
   blockduplicator:
-    aliases: []
+    aliases: [bdreload]
     description: Reloads the configuration file
     usage: |
            /<command>              

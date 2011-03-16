@@ -106,7 +106,7 @@ public class BlockDuplicator extends JavaPlugin {
                 } else {                    
                     BDLogging.permDenyMsg(requestplayer);
                 }                
-            } else if (commandLabel.equalsIgnoreCase("blockduplicator")) {
+            } else if ((commandLabel.equalsIgnoreCase("blockduplicator")) || (commandLabel.equalsIgnoreCase("bdreload"))) {
                 if (BDPermissions.canReload(requestplayer)) {
                     // Try to reload the config file
                     try {
