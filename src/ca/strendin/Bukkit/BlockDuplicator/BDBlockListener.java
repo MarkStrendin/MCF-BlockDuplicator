@@ -35,8 +35,11 @@ public class BDBlockListener extends BlockListener {
         } else if (thePlayer.getItemInHand().getTypeId() == BDCommands.PaintBrushTool) {
             // Paintbrush tool
             
-            // TODO: Permissions here
-            BDTool.dataSetterHandler(event.getPlayer(), event.getBlock());
+            if (BDPermissions.canUsePaintbrushTool(thePlayer)) {
+                event.setCancelled(true);
+                BDTool.dataSetterHandler(event.getPlayer(), event.getBlock());                
+            }
+            
             
         }
         
@@ -60,7 +63,11 @@ public class BDBlockListener extends BlockListener {
             }
                         
         } else if (thePlayer.getItemInHand().getTypeId() == BDCommands.PaintBrushTool) {
-            BDTool.dataPasteHandler(event.getPlayer(), event.getBlock());
+            
+            if (BDPermissions.canUsePaintbrushTool(thePlayer)) {
+                BDTool.dataPasteHandler(event.getPlayer(), event.getBlock());                
+            }
+            
         }
         
                 
