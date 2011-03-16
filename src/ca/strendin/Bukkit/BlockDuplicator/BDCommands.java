@@ -69,8 +69,14 @@ public class BDCommands {
         }
         
         for (int x = 0; x < numStacks; x++) {
-            ItemStack tobegiven = thisItemID;
-            tobegiven.setAmount(64);
+            //ItemStack tobegiven = thisItemID.;
+            //tobegiven.setAmount(64);
+            
+            ItemStack tobegiven = new ItemStack(thisItemID.getTypeId(),(short)64,(byte)0);
+            tobegiven.setData(thisItemID.getData());
+            tobegiven.setDurability(thisItemID.getDurability());
+            
+            
             toThisPlayer.getInventory().addItem(tobegiven);            
         }
         
@@ -106,8 +112,6 @@ public class BDCommands {
         } else {
             return false;
         }
-        
-        
     }
     
     /*
