@@ -13,17 +13,25 @@ public class BDLogging {
     private static ChatColor errorColor = ChatColor.RED;
     
    
-
-    public static void sendMsg(Player tothisplayer, String message) {
+    public static void sendPlayer(Player tothisplayer, String message) {
         tothisplayer.sendMessage(normalColor + message);        
     }
     
-    public static void sendConsole(String message) {        
-        System.out.println("[BlockDuplicator] " + message);
-        log.info(message);
+    public static void logThis(String message) {
+        log.info("[BlockDuplicator] " + message);
     }
     
-    public static void errorMsg(Player tothisplayer, String message) {
+    
+    public static void sendConsole(String message) {
+        logThis(message);        
+    }
+    
+    public static void sendConsoleOnly(String message) {
+        System.out.println(message);
+    }
+    
+    
+    public static void sendPlayerError(Player tothisplayer, String message) {
         tothisplayer.sendMessage(errorColor  + message);
     }
     

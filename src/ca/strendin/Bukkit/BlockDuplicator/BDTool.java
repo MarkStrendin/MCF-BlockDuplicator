@@ -33,9 +33,9 @@ public class BDTool {
             player.sendMessage(" Name: " + block.getTypeId());
             player.sendMessage(" Data: " + block.getData());
              */
-            BDLogging.sendMsg(player,"Ink set to: " + block.getType());
+            BDLogging.sendPlayer(player,"Ink set to: " + block.getType());
         } else {
-            BDLogging.sendMsg(player, "Sorry, that block cannot be copied");
+            BDLogging.sendPlayerError(player, "Sorry, that block cannot be copied");
         }
         
     
@@ -68,11 +68,11 @@ public class BDTool {
                     block.setData(copiedBlock.getData());
                 }
             } else {
-                BDLogging.sendMsg(player, "Sorry, that block cannot be overwritten with this tool");                
+                BDLogging.sendPlayerError(player, "Sorry, that block cannot be overwritten with this tool");                
             }
             
         } else {
-            BDLogging.sendMsg(player,"No data saved for you yet!");
+            BDLogging.sendPlayerError(player,"No data saved for you yet!");
         }
 
 
@@ -126,7 +126,7 @@ public class BDTool {
         
         
         if (player.getInventory().firstEmpty() < 0) {
-            player.sendMessage("Your inventory is full!");             
+            BDLogging.sendPlayerError(player,"Your inventory is full!");             
         } else {
             // Check if this item is allowed to be duplicated
             if (BDCommands.ThisItemAllowed(block.getTypeId())) {
@@ -142,7 +142,7 @@ public class BDTool {
                 BDCommands.giveStack(player,tobegiven);
                 player.updateInventory();                    
             } else {
-                player.sendMessage("Duplicating that block is not allowed");
+                BDLogging.sendPlayerError(player,"Duplicating that block is not allowed");
             }
             
         }

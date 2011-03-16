@@ -111,16 +111,16 @@ public class BlockDuplicator extends JavaPlugin {
                     // Try to reload the config file
                     try {
                         loadConfigFile();
-                        BDLogging.sendMsg(requestplayer,"BlockDuplicator config file reloaded!");
+                        BDLogging.sendPlayer(requestplayer,"BlockDuplicator config file reloaded!");
                     } catch (IOException e) {
-                        BDLogging.sendMsg(requestplayer, ChatColor.RED + "IOException when attempting to reload the config file");                        
+                        BDLogging.sendPlayerError(requestplayer, ChatColor.RED + "IOException when attempting to reload the config file");                        
                     }
                 } else {                    
                     BDLogging.permDenyMsg(requestplayer);
                 }
             }
         } else {
-            BDLogging.sendConsole("This command is designed for players only");            
+            BDLogging.sendConsoleOnly("This command is designed for players only");            
         }
         
         return true;        

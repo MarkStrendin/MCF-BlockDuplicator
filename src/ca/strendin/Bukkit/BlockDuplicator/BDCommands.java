@@ -30,7 +30,7 @@ public class BDCommands {
      */
     public static boolean handleClearInvCmd(Player thisplayer) {
         thisplayer.getInventory().clear();
-        BDLogging.sendMsg(thisplayer,"Inventory cleared!");
+        BDLogging.sendPlayer(thisplayer,"Inventory cleared!");
         return true;
     }
     
@@ -54,7 +54,7 @@ public class BDCommands {
      */
     public static boolean giveStack(Player toThisPlayer, ItemStack thisStack) {        
         toThisPlayer.getInventory().addItem(thisStack);
-        BDLogging.sendMsg(toThisPlayer,"Giving 64 " + thisStack.getType());
+        BDLogging.sendPlayer(toThisPlayer,"Giving 64 " + thisStack.getType());
         return true;
     }
     
@@ -74,7 +74,7 @@ public class BDCommands {
             toThisPlayer.getInventory().addItem(tobegiven);            
         }
         
-        BDLogging.sendMsg(toThisPlayer,"Giving (" + numStacks + " x 64) " + thisItemID.getType());        
+        BDLogging.sendPlayer(toThisPlayer,"Giving (" + numStacks + " x 64) " + thisItemID.getType());        
         
         return true;
     }
