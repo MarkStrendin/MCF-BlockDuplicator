@@ -30,6 +30,7 @@ public class BDCommands {
      */
     public static boolean handleClearInvCmd(Player thisplayer) {
         thisplayer.getInventory().clear();
+        BDLogging.logThis("[CI] " +thisplayer.getDisplayName() + " cleared their inventory");
         BDLogging.sendPlayer(thisplayer,"Inventory cleared!");
         return true;
     }
@@ -103,10 +104,14 @@ public class BDCommands {
         int thisManyStacks = 1;
         
         if (args.length > 0) {
-            thisManyStacks = Integer.parseInt(args[0].trim());
+        	try {
+        	    thisManyStacks = Integer.parseInt(args[0].trim());
+        	} catch (Exception e) { thisManyStacks = 1;}
+        	
         }
         
         if (thisplayer.getItemInHand().getTypeId() != 0) {        
+        	BDLogging.logThis("[MORE] Giving " + thisplayer.getDisplayName() + " " + thisManyStacks + " stacks of " + thisplayer.getItemInHand().getTypeId());
             giveStack(thisplayer,thisplayer.getItemInHand(),thisManyStacks);
             return true;
         } else {
@@ -122,34 +127,39 @@ public class BDCommands {
      */
     public static boolean handlePickCmd(Player thisplayer,String[] args) {
         
-        int newDataValue = 0;
-
-        if (args.length > 0) {
-            newDataValue = Integer.parseInt(args[0].trim());
-        }
-        
-                
-        /* Check to see if we allow this block's data to be modified
-         * and figure out the appropriate data values for it
-         */
-        
-        int MaxData = -1;
-        switch (thisplayer.getItemInHand().getTypeId()) {
-        case 44: MaxData = 3; break;
-        case 43: MaxData = 3; break;
-        case 17: MaxData = 2; break;
-        case 35: MaxData = 15; break;   
-        case 53: MaxData = 3; break;   
-        case 67: MaxData = 3; break;
-        case 18: MaxData = 2; break;
-        }
-        
-        /* 
-         * If everything seems sane, change the data value
-         */
-        if ((newDataValue <= MaxData) && (newDataValue >= 0)) {
-            thisplayer.getItemInHand().setDurability((short) newDataValue);
-        }
+    	if (thisplayer.getItemInHand().getTypeId() != 0) {
+	        int newDataValue = 0;
+	
+	        if (args.length > 0) {
+	        	try {
+		            newDataValue = Integer.parseInt(args[0].trim());
+	        	} catch (Exception e) { newDataValue = 0;}
+	        	
+	        }
+	                
+	        /* Check to see if we allow this block's data to be modified
+	         * and figure out the appropriate data values for it
+	         */
+	        
+	        int MaxData = -1;
+	        switch (thisplayer.getItemInHand().getTypeId()) {
+	        case 44: MaxData = 3; break;
+	        case 43: MaxData = 3; break;
+	        case 17: MaxData = 2; break;
+	        case 35: MaxData = 15; break;   
+	        case 53: MaxData = 3; break;   
+	        case 67: MaxData = 3; break;
+	        case 18: MaxData = 2; break;
+	        }
+	        
+	        /* 
+	         * If everything seems sane, change the data value
+	         */
+	        if ((newDataValue <= MaxData) && (newDataValue >= 0)) {
+	        	BDLogging.logThis("[PICK] Changing " + thisplayer.getDisplayName() + "'s " + thisplayer.getItemInHand().getType() + " to data value " + newDataValue);
+	            thisplayer.getItemInHand().setDurability((short) newDataValue);
+	        }
+    	}
         return true;
     }
     
