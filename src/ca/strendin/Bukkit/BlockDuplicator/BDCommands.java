@@ -35,19 +35,76 @@ public class BDCommands {
         return true;
     }
     
+
     /*
-     * Checks to see if the item is on the allowed list
+     * Handles the /more command
+     * Finishes the player's current stack, and gives them the specified number more stacks
      */
-    public static boolean ThisItemAllowed(int itemID) {
-        boolean returnMe = true;
+    public static boolean handleMoreCmd(Player thisplayer,String[] args) {        
         
-        for (int checked_block : denied_blocks) {
-            if (checked_block == itemID) {
-                returnMe = false;
+        int thisManyStacks = 1;
+        
+        if (args.length > 0) {
+            try {
+                thisManyStacks = Integer.parseInt(args[0].trim());
+            } catch (Exception e) { thisManyStacks = 1;}
+            
+        }
+        
+        if (thisplayer.getItemInHand().getTypeId() != 0) {        
+            BDLogging.logThis("[MORE] Giving " + thisplayer.getDisplayName() + " " + thisManyStacks + " stacks of " + thisplayer.getItemInHand().getTypeId());
+            giveStack(thisplayer,thisplayer.getItemInHand(),thisManyStacks);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    /*
+     * Handles the /pick command
+     * - /pick <#>
+     * Attempts to set the data value of whatever the player is holding to the 
+     *  specified number
+     */
+    public static boolean handlePickCmd(Player thisplayer,String[] args) {
+        
+        if (thisplayer.getItemInHand().getTypeId() != 0) {
+            int newDataValue = 0;
+    
+            if (args.length > 0) {
+                try {
+                    newDataValue = Integer.parseInt(args[0].trim());
+                } catch (Exception e) { newDataValue = 0;}
+                
+            }
+                    
+            /* Check to see if we allow this block's data to be modified
+             * and figure out the appropriate data values for it
+             */
+            
+            int MaxData = -1;
+            switch (thisplayer.getItemInHand().getTypeId()) {
+            case 44: MaxData = 3; break;
+            case 43: MaxData = 3; break;
+            case 17: MaxData = 2; break;
+            case 35: MaxData = 15; break;   
+            case 53: MaxData = 3; break;   
+            case 67: MaxData = 3; break;
+            case 18: MaxData = 2; break;
+            }
+            
+            /* 
+             * If everything seems sane, change the data value
+             */
+            if ((newDataValue <= MaxData) && (newDataValue >= 0)) {
+                BDLogging.logThis("[PICK] Changing " + thisplayer.getDisplayName() + "'s " + thisplayer.getItemInHand().getType() + " to data value " + newDataValue);
+                thisplayer.getItemInHand().setDurability((short) newDataValue);
             }
         }
-        return returnMe;
+        return true;
     }
+    
+
     
     
     /*
@@ -86,6 +143,19 @@ public class BDCommands {
         return true;
     }
     
+    /*
+     * Checks to see if the item is on the allowed list
+     */
+    public static boolean ThisItemAllowed(int itemID) {
+        boolean returnMe = true;
+        
+        for (int checked_block : denied_blocks) {
+            if (checked_block == itemID) {
+                returnMe = false;
+            }
+        }
+        return returnMe;
+    }   
     
     /*
      * Translates an item ID # into it's name
@@ -95,73 +165,8 @@ public class BDCommands {
         return thisItemStack.getType().toString();
     }
     
-    /*
-     * Handles the /more command
-     * Finishes the player's current stack, and gives them the specified number more stacks
-     */
-    public static boolean handleMoreCmd(Player thisplayer,String[] args) {        
-        
-        int thisManyStacks = 1;
-        
-        if (args.length > 0) {
-        	try {
-        	    thisManyStacks = Integer.parseInt(args[0].trim());
-        	} catch (Exception e) { thisManyStacks = 1;}
-        	
-        }
-        
-        if (thisplayer.getItemInHand().getTypeId() != 0) {        
-        	BDLogging.logThis("[MORE] Giving " + thisplayer.getDisplayName() + " " + thisManyStacks + " stacks of " + thisplayer.getItemInHand().getTypeId());
-            giveStack(thisplayer,thisplayer.getItemInHand(),thisManyStacks);
-            return true;
-        } else {
-            return false;
-        }
-    }
     
-    /*
-     * Handles the /pick command
-     * - /pick <#>
-     * Attempts to set the data value of whatever the player is holding to the 
-     *  specified number
-     */
-    public static boolean handlePickCmd(Player thisplayer,String[] args) {
-        
-    	if (thisplayer.getItemInHand().getTypeId() != 0) {
-	        int newDataValue = 0;
-	
-	        if (args.length > 0) {
-	        	try {
-		            newDataValue = Integer.parseInt(args[0].trim());
-	        	} catch (Exception e) { newDataValue = 0;}
-	        	
-	        }
-	                
-	        /* Check to see if we allow this block's data to be modified
-	         * and figure out the appropriate data values for it
-	         */
-	        
-	        int MaxData = -1;
-	        switch (thisplayer.getItemInHand().getTypeId()) {
-	        case 44: MaxData = 3; break;
-	        case 43: MaxData = 3; break;
-	        case 17: MaxData = 2; break;
-	        case 35: MaxData = 15; break;   
-	        case 53: MaxData = 3; break;   
-	        case 67: MaxData = 3; break;
-	        case 18: MaxData = 2; break;
-	        }
-	        
-	        /* 
-	         * If everything seems sane, change the data value
-	         */
-	        if ((newDataValue <= MaxData) && (newDataValue >= 0)) {
-	        	BDLogging.logThis("[PICK] Changing " + thisplayer.getDisplayName() + "'s " + thisplayer.getItemInHand().getType() + " to data value " + newDataValue);
-	            thisplayer.getItemInHand().setDurability((short) newDataValue);
-	        }
-    	}
-        return true;
-    }
+    
     
     /*
      * Checks to see if this item is one that has a special data value, to
@@ -189,6 +194,7 @@ public class BDCommands {
      */
     public static void givePlayerDuplicatorTool (Player thisPlayer) {
         ItemStack DuplicatorToolItem = new ItemStack(DuplicatorTool,(short)1,(byte)0);
+        BDLogging.logThis("[TOOLS] Giving " + thisPlayer.getDisplayName() + " a duplicator tool (" + DuplicatorToolItem.getType() + ")");
         thisPlayer.getInventory().addItem(DuplicatorToolItem);
     }
     
@@ -196,8 +202,10 @@ public class BDCommands {
      * Gives the player a paintbrush
      */
     public static void givePlayerPaintbrushTool(Player thisPlayer) {
-        ItemStack DuplicatorToolItem = new ItemStack(PaintBrushTool,(short)1,(byte)0);
-        thisPlayer.getInventory().addItem(DuplicatorToolItem);
+        ItemStack PaintBrushToolItem = new ItemStack(PaintBrushTool,(short)1,(byte)0);
+        BDLogging.logThis("[TOOLS] Giving " + thisPlayer.getDisplayName() + " a paintbrush tool (" + PaintBrushToolItem.getType() + ")");
+        
+        thisPlayer.getInventory().addItem(PaintBrushToolItem);
     }
 
     
