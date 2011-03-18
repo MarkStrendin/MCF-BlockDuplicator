@@ -20,6 +20,8 @@ While wielding the duplicator tool:
 
 **Right clicking** a block will give you a full stack of that block (with data intact)
 
+The default item for this tool is the stone axe (275), but you can change this to any item in the configuration file.
+
 
 Paintbrush tool
 ---------------
@@ -29,6 +31,8 @@ While wielding the paintbrush tool:
 **Left clicking** a block will save that block to your paintbrush tool, including it's data value (color for wool, etc).
 
 **Right cliking** a block will turn that block into a copy of whatever block the paintbrush tool has saved.
+
+The default item for this tool is the slime ball (341), but you can change this to any item in the configuration file.
 
 Warning about WorldGuard and similar plugins
 --------------------------------------------
