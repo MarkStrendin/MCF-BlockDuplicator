@@ -83,8 +83,6 @@ Isn't this the same as VoxelDoop / VoxelMore?
 
 Yes, this plugin's functionality is the same as VoxelDoop and VoxelMore, however this plugin supports permissions. When Bukkit's built-in permissions become available, and the VoxelBox team updates their plugins to support it, this plugin will no longer be necessary.
 
-The server that I run is a hybrid creative/survival server - some players prefer to play survival, but still want to play with friends who play creative. This plugin gives players the capabilities of the awesome VoxelDoop and VoxelMore plugins, but with the ability to limit it to certain players based on permissions.
-
 If your server is 100% creative, you should probably be using VoxelMore and VoxelDoop instead, as they are more powerful, and made by people who know more about what they're doing than I do.
 
 
