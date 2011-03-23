@@ -31,14 +31,14 @@ While wielding the paintbrush tool:
 
 **Left clicking** a block will save that block to your paintbrush tool, including it's data value (color for wool, etc).
 
-**Right cliking** a block will turn that block into a copy of whatever block the paintbrush tool has saved.
+**Right clicking** a block will turn that block into a copy of whatever block the paintbrush tool has saved.
 
 The default item for this tool is the slime ball (341), but you can change this to any item in the configuration file.
 
 Warning about WorldGuard and similar plugins
 --------------------------------------------
 
-The data-changing abilities of this plugin do not adhere to regions protected by plugins such as WorldGuard. Users with access to the data-manipulator capabilities of the duplicator and paintbrush tools will be able to modofiy blocks in protected areas. Only give access to `blockduplicator.tools.data` and `blockduplicator.tools.paintbrush` to those you trust.
+The data-changing abilities of this plugin do not adhere to regions protected by plugins such as WorldGuard. Users with access to the data-manipulator capabilities of the duplicator and paintbrush tools will be able to modify blocks in protected areas. Only give access to `blockduplicator.tools.data` and `blockduplicator.tools.paintbrush` to those you trust.
 
 
 Commands
@@ -100,7 +100,7 @@ Changelog
 
 **v0.1**
 
- - Added support for Permissions and GroupManager (Will favour GroupManager) 
+ - Added support for Permissions and GroupManager 
 
 **v0.0**
 
