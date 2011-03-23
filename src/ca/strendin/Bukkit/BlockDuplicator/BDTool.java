@@ -28,7 +28,7 @@ public class BDTool {
             PlayerBlockStorage.put(player, block);
             
             BDLogging.logThis(player.getDisplayName() + " set their ink to " + block.getType() + " with data value " + block.getData());
-            BDLogging.sendPlayer(player,"Ink set to: " + block.getType());
+            BDLogging.sendPlayer(player,"Ink set to: " + BDLogging.itemColor + block.getType());
         } else {
             BDLogging.sendPlayerError(player, "Sorry, that block cannot be copied");
         }

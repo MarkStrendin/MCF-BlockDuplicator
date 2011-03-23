@@ -5,16 +5,18 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class BDCommands {
     
-    // Load these from a config file at some point
+    // These represent default values
+    // Values from the config file overwrite these
     public static int DuplicatorTool = 275;
     public static int PaintBrushTool = 341;
+    
+    //static ChatColor textColor = ChatColor.DARK_GREEN;
 
     /*
      * These blocks play nicely with the paint tool    
@@ -112,7 +114,7 @@ public class BDCommands {
      */
     public static boolean giveStack(Player toThisPlayer, ItemStack thisStack) {        
         toThisPlayer.getInventory().addItem(thisStack);
-        BDLogging.sendPlayer(toThisPlayer,"Giving 64 " + thisStack.getType());
+        BDLogging.sendPlayer(toThisPlayer,"Giving 64 " + BDLogging.itemColor + thisStack.getType());
         return true;
     }
     
@@ -138,7 +140,7 @@ public class BDCommands {
             toThisPlayer.getInventory().addItem(tobegiven);            
         }
         
-        BDLogging.sendPlayer(toThisPlayer,"Giving (" + numStacks + " x 64) " + thisItemID.getType());        
+        BDLogging.sendPlayer(toThisPlayer,"Giving (" + numStacks + " x 64) " + BDLogging.itemColor + thisItemID.getType());        
         
         return true;
     }
@@ -194,6 +196,7 @@ public class BDCommands {
      */
     public static void givePlayerDuplicatorTool (Player thisPlayer) {
         ItemStack DuplicatorToolItem = new ItemStack(DuplicatorTool,(short)1,(byte)0);
+        BDLogging.sendPlayer(thisPlayer, "Giving Duplicator tool: " + BDLogging.itemColor + DuplicatorToolItem.getType());
         BDLogging.logThis("[TOOLS] Giving " + thisPlayer.getDisplayName() + " a duplicator tool (" + DuplicatorToolItem.getType() + ")");
         thisPlayer.getInventory().addItem(DuplicatorToolItem);
     }
@@ -203,6 +206,7 @@ public class BDCommands {
      */
     public static void givePlayerPaintbrushTool(Player thisPlayer) {
         ItemStack PaintBrushToolItem = new ItemStack(PaintBrushTool,(short)1,(byte)0);
+        BDLogging.sendPlayer(thisPlayer, "Giving Paintbrush tool: " + BDLogging.itemColor + PaintBrushToolItem.getType());
         BDLogging.logThis("[TOOLS] Giving " + thisPlayer.getDisplayName() + " a paintbrush tool (" + PaintBrushToolItem.getType() + ")");
         
         thisPlayer.getInventory().addItem(PaintBrushToolItem);

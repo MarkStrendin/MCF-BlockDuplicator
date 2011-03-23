@@ -11,7 +11,9 @@ public class BDLogging {
     
     private static ChatColor normalColor = ChatColor.DARK_GREEN;
     private static ChatColor errorColor = ChatColor.RED;
-    
+
+    // Public so that BDCommands methods can see it
+    public static ChatColor itemColor = ChatColor.GREEN;
    
     public static void sendPlayer(Player tothisplayer, String message) {
         tothisplayer.sendMessage(normalColor + message);        
