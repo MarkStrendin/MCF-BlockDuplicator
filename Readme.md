@@ -3,7 +3,7 @@ BlockDuplicator
 
 This bukkit plugin can be used to easily duplicate blocks.
 
-Most recent CraftBukkit version tested with: 554
+Most recent CraftBukkit version tested with: 556
 
 Duplicator tool
 ---------------
@@ -17,6 +17,7 @@ While wielding the duplicator tool:
  - Single steps (Stone, Wood, Cobblestone, Sandstone)
  - Logs (Normal, Redwood, Birch)
  - Steps (direction of the steps)
+ - Pumpkins and Jack-o-Lanterns (direction)
 
 **Right clicking** a block will give you a full stack of that block (with data intact)
 
