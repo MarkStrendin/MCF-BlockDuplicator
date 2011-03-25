@@ -3,7 +3,8 @@ BlockDuplicator
 
 This bukkit plugin can be used to easily duplicate blocks.
 
-Most recent CraftBukkit version tested with: 556
+Most recent CraftBukkit version tested with: 561
+**Compatibility note:** Version 1.3.2 requires CraftBukkit build 561 or above, and will not work on earlier builds (use BlockDuplicator 1.3.1 for earlier versions)
 
 Duplicator tool
 ---------------
@@ -43,7 +44,7 @@ The data-changing abilities of this plugin do not adhere to regions protected by
 
 Commands
 --------
-    /blockduplicator	Reloads the config file
+    /blockduplicator	Reloads the config file (alias: /bdreload)
     /duplicator   		Gives the player the duplicator tool (alias: /duper)
     /paintbrush			Gives the player the paintbrush tool (alias: /painter)
     /bdtools			Gives the player the duplicator and paintbrush tools
@@ -88,6 +89,16 @@ If your server is 100% creative, you should probably be using VoxelMore and Voxe
 
 Changelog
 ---------
+
+**v0.3.2**
+
+ - Updated to be compatible with CraftBukkit 561 and above
+
+**v0.3.1**
+
+ - Minor bug fixes
+ - Minor communication and logging improvements
+
 
 **v0.3**
 
