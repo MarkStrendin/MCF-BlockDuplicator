@@ -50,7 +50,6 @@ public class BDCommands {
             try {
                 thisManyStacks = Integer.parseInt(args[0].trim());
             } catch (Exception e) { thisManyStacks = 1;}
-            
         }
         
         if (thisplayer.getItemInHand().getTypeId() != 0) {        

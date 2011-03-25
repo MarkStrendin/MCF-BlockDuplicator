@@ -16,10 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class BlockDuplicator extends JavaPlugin {
     
-    private final BDBlockListener blockListener = new BDBlockListener(this);
     private final BDPlayerListener playerListener = new BDPlayerListener(this);
-    
-    
     private static String configFileName = "BlockDuplicator.config";  
     public static Properties configSettings = new Properties();
     
@@ -58,8 +55,7 @@ public class BlockDuplicator extends JavaPlugin {
 
         // Register events
         PluginManager pm = getServer().getPluginManager();        
-        pm.registerEvent(Event.Type.BLOCK_RIGHTCLICKED, blockListener, Priority.Normal, this);
-        pm.registerEvent(Event.Type.BLOCK_DAMAGED, blockListener, Priority.Normal, this);
+        pm.registerEvent(Event.Type.PLAYER_INTERACT, this.playerListener, Priority.Normal, this);        
         pm.registerEvent(Event.Type.PLAYER_QUIT, this.playerListener, Event.Priority.Normal, this);
     }
     
