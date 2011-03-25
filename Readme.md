@@ -4,7 +4,8 @@ BlockDuplicator
 This bukkit plugin can be used to easily duplicate blocks.
 
 Most recent CraftBukkit version tested with: 561
-**Compatibility note:** Version 1.3.2 requires CraftBukkit build 561 or above, and will not work on earlier builds (use BlockDuplicator 1.3.1 for earlier versions)
+
+**Compatibility note:** Version 0.3.2 requires CraftBukkit build 561 or above, and will not work on earlier builds (use BlockDuplicator 0.3.1 for earlier versions)
 
 Duplicator tool
 ---------------
