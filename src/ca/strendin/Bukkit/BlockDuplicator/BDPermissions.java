@@ -67,20 +67,7 @@ public class BDPermissions {
     public static boolean canUsePickCommand(Player player) {
         return hasPermission(player,"blockduplicator.commands.pick",true);
     }
-    
-    public static boolean canSummonDuplicator(Player player) {
-        boolean returnMe = false;
-        
-        if ((hasPermission(player,"blockduplicator.tools.data",true)) || (hasPermission(player,"blockduplicator.tools.duplicator",true))) {
-            returnMe = true;
-        }
-        return returnMe;
-    }
-    
-    public static boolean canSummonPaintbrush(Player player) {
-        return hasPermission(player,"blockduplicator.tools.paintbrush",true);
-    }
-    
+
     /*
      * Access to the data-cycler capabilities of the duplicator tool
      */

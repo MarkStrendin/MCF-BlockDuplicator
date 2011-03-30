@@ -6,7 +6,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class BDPlayerListener extends PlayerListener {
     public static BlockDuplicator plugin;
-    
+
     public BDPlayerListener(BlockDuplicator thisplugin) {
         plugin = thisplugin;
     }
@@ -20,11 +20,8 @@ public class BDPlayerListener extends PlayerListener {
         if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
             if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.DuplicatorTool) {
                 // Duplicator tool
-            
-                if (BDPermissions.canUseDataTool(event.getPlayer())) {
-                    event.setCancelled(true);
-                    BDTool.dataToolHandler(event.getPlayer(),event.getClickedBlock());
-                }
+                
+                // This functionality has been moved to the data tool
                 
             } else if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.PaintBrushTool) {
                 // Paintbrush tool
@@ -32,6 +29,13 @@ public class BDPlayerListener extends PlayerListener {
                 if (BDPermissions.canUsePaintbrushTool(event.getPlayer())) {
                     event.setCancelled(true);
                     BDTool.dataSetterHandler(event.getPlayer(), event.getClickedBlock());                
+                }
+            } else if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.DataTool) {
+                // Data tool
+                
+                if (BDPermissions.canUseDataTool(event.getPlayer())) {
+                    event.setCancelled(true);
+                    BDTool.dataToolHandler(event.getPlayer(),event.getClickedBlock());
                 }
             }
         } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -46,6 +50,11 @@ public class BDPlayerListener extends PlayerListener {
                 
                 if (BDPermissions.canUsePaintbrushTool(event.getPlayer())) {
                     BDTool.dataPasteHandler(event.getPlayer(), event.getClickedBlock());                
+                }
+            } else if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.DataTool) {
+                if (BDPermissions.canUseDataTool(event.getPlayer())) {
+                    event.setCancelled(true);
+                    BDTool.dataToolHandler(event.getPlayer(),event.getClickedBlock(),true);
                 }
             }  
         }

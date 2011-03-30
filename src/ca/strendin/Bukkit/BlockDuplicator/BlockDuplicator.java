@@ -84,24 +84,35 @@ public class BlockDuplicator extends JavaPlugin {
                     BDLogging.permDenyMsg(requestplayer);
                 }               
             } else if ((commandLabel.equalsIgnoreCase("duper")) || (commandLabel.equalsIgnoreCase("duplicator"))) {                
-                if (BDPermissions.canSummonDuplicator(requestplayer)) {
+                if (BDPermissions.canUseDuplicatorTool(requestplayer)) {
                     BDCommands.givePlayerDuplicatorTool(requestplayer);
                 } else {                    
                     BDLogging.permDenyMsg(requestplayer);
-                }               
+                }  
+            } else if (commandLabel.equalsIgnoreCase("datatool")) {                
+                if (BDPermissions.canUseDataTool(requestplayer)) {
+                    BDCommands.givePlayerDataTool(requestplayer);
+                } else {                    
+                    BDLogging.permDenyMsg(requestplayer);
+                }  
             } else if ((commandLabel.equalsIgnoreCase("paintbrush")) || (commandLabel.equalsIgnoreCase("painter"))) {                
-                if (BDPermissions.canSummonPaintbrush(requestplayer)) {
+                if (BDPermissions.canUsePaintbrushTool(requestplayer)) {
                     BDCommands.givePlayerPaintbrushTool(requestplayer);
                 } else {                    
                     BDLogging.permDenyMsg(requestplayer);
                 }               
             } else if ((commandLabel.equalsIgnoreCase("bdtools")) || (commandLabel.equalsIgnoreCase("bdt"))) {                
-                if ((BDPermissions.canSummonPaintbrush(requestplayer)) && (BDPermissions.canSummonDuplicator(requestplayer))) {
-                    BDCommands.givePlayerDuplicatorTool(requestplayer);
+                if (BDPermissions.canUsePaintbrushTool(requestplayer)) {
                     BDCommands.givePlayerPaintbrushTool(requestplayer);
-                } else {                    
-                    BDLogging.permDenyMsg(requestplayer);
-                }                
+                }
+                
+                if (BDPermissions.canUseDataTool(requestplayer)) {
+                    BDCommands.givePlayerDataTool(requestplayer);
+                }
+                
+                if (BDPermissions.canUseDuplicatorTool(requestplayer)) {
+                    BDCommands.givePlayerDuplicatorTool(requestplayer);
+                }               
             } else if ((commandLabel.equalsIgnoreCase("blockduplicator")) || (commandLabel.equalsIgnoreCase("bdreload"))) {
                 if (BDPermissions.canReload(requestplayer)) {
                     // Try to reload the config file
@@ -144,28 +155,61 @@ public class BlockDuplicator extends JavaPlugin {
     
         configSettings.load(fs);
         
-        BDLogging.sendConsole("Config file loaded!");        
+        BDLogging.logThis("Config file loaded!");        
+        
+        int givenDuplicatorToolID = BDCommands.DuplicatorTool;
+        int givenPaintBrushToolID = BDCommands.PaintBrushTool;
+        int givenDataToolID = BDCommands.DataTool;
         
         // Default duplicator tool ID is 275
         try {
-            BDCommands.DuplicatorTool = Integer.parseInt(configSettings.getProperty("duplicatortoolid","275").trim());
-        } catch (Exception e) { BDLogging.sendConsole("duplicatortoolid was set to an insane value - check your config file"); }
+            givenDuplicatorToolID = Integer.parseInt(configSettings.getProperty("duplicatortoolid","275").trim());
+        } catch (Exception e) { BDLogging.logThis("duplicatortoolid was set to an insane value - check your config file"); }
         
         // Default paint brush tool is 341
         try {
-            BDCommands.PaintBrushTool = Integer.parseInt(configSettings.getProperty("paintbrushtoolid","341").trim());
-        } catch (Exception e) { BDLogging.sendConsole("paintbrushtoolid was set to an insane value - check your config file"); }
+            givenPaintBrushToolID = Integer.parseInt(configSettings.getProperty("paintbrushtoolid","341").trim());
+        } catch (Exception e) { BDLogging.logThis("paintbrushtoolid was set to an insane value - check your config file"); }
         
+        
+        // Default data tool is 352
+        try {
+            givenDataToolID = Integer.parseInt(configSettings.getProperty("datatoolid","352").trim());
+        } catch (Exception e) { BDLogging.logThis("datatoolid was set to an insane value - check your config file"); }
+        
+       
         /*
          * If the tools are set to the same item, use defaults instead
+         * 
          */
-        if (BDCommands.PaintBrushTool == BDCommands.DuplicatorTool) {
-            BDLogging.sendConsole("Paintbrush tool and duplicator tool cannot be set to the same item");
-            BDLogging.sendConsole(" using 275 for duplicator tool");
-            BDCommands.DuplicatorTool = 275;
-            BDLogging.sendConsole(" using 341 for paintbrush tool");
-            BDCommands.PaintBrushTool = 341;            
+        
+        if (givenPaintBrushToolID == givenDuplicatorToolID) {
+            BDLogging.logThis("Paintbrush tool and duplicator tool cannot be set to the same item");
+            BDLogging.logThis(" using "+BDCommands.PaintBrushTool+" for paintbrush tool");
+            givenPaintBrushToolID = BDCommands.PaintBrushTool;
+            BDLogging.logThis(" using "+BDCommands.DuplicatorTool+" for duplicator tool");
+            givenDuplicatorToolID = BDCommands.DuplicatorTool;            
         }
+        
+        if (givenPaintBrushToolID == givenDataToolID) {
+            BDLogging.logThis("Paintbrush tool and data tool cannot be set to the same item");
+            BDLogging.logThis(" using "+BDCommands.PaintBrushTool+" for paintbrush tool");
+            givenPaintBrushToolID = BDCommands.PaintBrushTool;
+            BDLogging.logThis(" using "+BDCommands.DataTool+" for data tool");
+            givenDataToolID = BDCommands.DataTool;            
+        }
+        
+        if (givenDuplicatorToolID == givenDataToolID) {
+            BDLogging.logThis("Duplicator tool and data tool cannot be set to the same item");
+            BDLogging.logThis(" using "+BDCommands.DuplicatorTool+" for duplicator tool");
+            givenDuplicatorToolID = BDCommands.DuplicatorTool;
+            BDLogging.logThis(" using "+BDCommands.DataTool+" for data tool");
+            givenDataToolID = BDCommands.DataTool;                        
+        }
+        
+        BDCommands.DuplicatorTool = givenDuplicatorToolID;
+        BDCommands.PaintBrushTool = givenPaintBrushToolID;
+        BDCommands.DataTool = givenDataToolID;               
         
         /*
          * 7 - bedrock

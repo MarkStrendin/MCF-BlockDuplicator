@@ -12,7 +12,15 @@ Duplicator tool
 
 While wielding the duplicator tool:
 
-**Left clicking** a block will cycle it's data values. Block types that can be changed are:
+**Right clicking** a block will give you a full stack of that block (with data intact)
+
+The default item for this tool is the stone axe (275), but you can change this to any item in the configuration file.
+
+
+Data Tool
+---------
+
+Clicking a block will cycle it's data values. Block types that can be changed are:
 
  - Wool (Colors)
  - Leaves (Normal, Redwood, Birch)
@@ -20,10 +28,11 @@ While wielding the duplicator tool:
  - Logs (Normal, Redwood, Birch)
  - Steps (direction of the steps)
  - Pumpkins and Jack-o-Lanterns (direction)
+ 
+ **Left clicking** will increment(+) the data value by 1
+ **Right clicking** will decrement(-) the data value by 1 (effectively going in the reverse direction as left clicking)
 
-**Right clicking** a block will give you a full stack of that block (with data intact)
-
-The default item for this tool is the stone axe (275), but you can change this to any item in the configuration file.
+The default item for this tool is the bone (352), but you can change this to any item in the configuration file.
 
 
 Paintbrush tool
@@ -37,6 +46,7 @@ While wielding the paintbrush tool:
 
 The default item for this tool is the slime ball (341), but you can change this to any item in the configuration file.
 
+
 Warning about WorldGuard and similar plugins
 --------------------------------------------
 
@@ -48,9 +58,9 @@ Commands
     /blockduplicator	Reloads the config file (alias: /bdreload)
     /duplicator   		Gives the player the duplicator tool (alias: /duper)
     /paintbrush			Gives the player the paintbrush tool (alias: /painter)
-    /bdtools			Gives the player the duplicator and paintbrush tools
-    					 Note: Requires permission to summon both tools
-    /clearinv      		Clears the player's inventory (alias: cli)    
+    /datatool			Gives the player the data tool
+    /bdtools			Gives the player one of each tool that they have permission to use    					 
+    /clearinv      		Clears the player's inventory (alias: /cli)    
     /more          		Gives the player duplicate stacks of whatever he/she is holding (ex: "/m 4" would give you 4 additional stacks) (alias: /m)    
     /pick          		Allows the player to change the data value of the item in their hand (for wool colors, single step types, etc)
 
@@ -72,7 +82,7 @@ If you only want users to be able to use the commands:
 
     blockduplicator.commands.*
 
-If you only want users to be able to use the tool:
+If you only want users to be able to use the tools:
 
     blockduplicator.tools.*
     
@@ -87,9 +97,26 @@ Yes, this plugin's functionality is the same as VoxelDoop and VoxelMore, however
 
 If your server is 100% creative, you should probably be using VoxelMore and VoxelDoop instead, as they are more powerful, and made by people who know more about what they're doing than I do.
 
+TODO List
+---------
+
+ - Area protection for the data tools (either built in, or hook into worldguard) 
 
 Changelog
 ---------
+
+**v0.4**
+ 
+ - Incremented version to 0.4
+ - Separated duplicator and data tool functionality into two seperate tools
+ - Changed how the "bdtools" function works internally - it will now give the player all tools that they have permission to use
+ - added /datatool command to summon a data tool
+ - changed data tool functionality - left clicking will increase data value of a block by 1, right clicking reverses it, subtracting 1
+
+**v0.3.3**
+
+ - The "blockduplicator"/"bdreload" commands can now be used from the console
+ - Minor fixes related to bukkit compatibility (Now works with build 600)  
 
 **v0.3.2**
 

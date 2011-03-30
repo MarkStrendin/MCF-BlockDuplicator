@@ -14,6 +14,7 @@ public class BDCommands {
     // These represent default values
     // Values from the config file overwrite these
     public static int DuplicatorTool = 275;
+    public static int DataTool = 352;
     public static int PaintBrushTool = 341;
     
     //static ChatColor textColor = ChatColor.DARK_GREEN;
@@ -210,6 +211,18 @@ public class BDCommands {
         
         thisPlayer.getInventory().addItem(PaintBrushToolItem);
     }
+    
+    
+    /*
+     * Gives the player a data tool
+     */
+    public static void givePlayerDataTool(Player thisPlayer) {
+        ItemStack PaintBrushToolItem = new ItemStack(DataTool,(short)1,(byte)0);
+        BDLogging.sendPlayer(thisPlayer, "Giving data tool: " + BDLogging.itemColor + PaintBrushToolItem.getType());
+        BDLogging.logThis("[TOOLS] Giving " + thisPlayer.getDisplayName() + " a data tool (" + PaintBrushToolItem.getType() + ")");
+        
+        thisPlayer.getInventory().addItem(PaintBrushToolItem);
+    }
 
     
     /* Translates a block ID into an item ID for certain
@@ -277,7 +290,6 @@ public class BDCommands {
         fB.write("#"); 
         fB.newLine();
         fB.newLine();
-        fB.newLine();
         fB.write("# Duplicator tool");
         fB.newLine();
         fB.write("#");
@@ -292,13 +304,32 @@ public class BDCommands {
         fB.newLine();
         fB.write("#   type of block clicked");
         fB.newLine();
-        fB.write("#");
-        fB.newLine();
-        fB.write("#  Left clicking will cycle the block's data field");
-        fB.newLine();
         fB.newLine();
         fB.write("duplicatortoolid = 275");
         fB.newLine();
+        fB.newLine();        
+        fB.write("# Data tool");
+        fB.newLine(); 
+        fB.write("#");
+        fB.newLine(); 
+        fB.write("# The item with this ID number will be used as");
+        fB.newLine(); 
+        fB.write("# the data scrolling tool. DEFAULT IS 352 (Bone)");
+        fB.newLine(); 
+        fB.write("#");
+        fB.newLine(); 
+        fB.write("#  Left clicking a block will increment it's data");
+        fB.newLine(); 
+        fB.write("#  value by 1");
+        fB.newLine(); 
+        fB.write("#");
+        fB.newLine(); 
+        fB.write("#  Right clicking a block will decrement it's data");
+        fB.newLine(); 
+        fB.write("#  value by 1");
+        fB.newLine(); 
+        fB.newLine(); 
+        fB.write("datatoolid = 352");        
         fB.newLine();
         fB.newLine();
         fB.write("# Paintbrush tool");

@@ -76,8 +76,12 @@ public class BDTool {
         
     }
     
-    
     public final static void dataToolHandler(Player player, Block block) {
+        dataToolHandler(player,block,false);
+    }
+    
+    
+    public final static void dataToolHandler(Player player, Block block, boolean reverse) {
         //cBlock blockHit = event.getBlock();
         
         // Check if this is a block that we want to modify
@@ -98,10 +102,21 @@ public class BDTool {
         // If the block ID was on the list, go ahead and cycle it's data
         if (MaxData >= 0) {
             int setDataTo = block.getData();
-            setDataTo++;
+            
+            if (reverse) {
+                setDataTo--;                            
+            } else {
+                setDataTo++;                
+            }
+            
             if (setDataTo > MaxData) {
                 setDataTo = 0;
             }
+            
+            if (setDataTo < 0) {
+                setDataTo = MaxData;
+            }
+            
             byte setDataToByte = (byte) (setDataTo & 0xFF);         
             
             //thePlayer.sendMessage("Setting data to " + setDataTo + "(" + setDataToByte + "/" + MaxData  + ")");
