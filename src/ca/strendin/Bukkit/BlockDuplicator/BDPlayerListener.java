@@ -2,7 +2,7 @@ package ca.strendin.Bukkit.BlockDuplicator;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
-import org.bukkit.event.player.PlayerEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class BDPlayerListener extends PlayerListener {
     public static BlockDuplicator plugin;
@@ -12,7 +12,7 @@ public class BDPlayerListener extends PlayerListener {
     }
     
     
-    public void onPlayerQuit(PlayerEvent event) {
+    public void onPlayerQuit(PlayerQuitEvent event) {
         BDTool.removePlayerFromStorageList(event.getPlayer()); 
     }
             
