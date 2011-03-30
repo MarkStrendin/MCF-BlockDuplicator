@@ -30,6 +30,7 @@ Clicking a block will cycle it's data values. Block types that can be changed ar
  - Pumpkins and Jack-o-Lanterns (direction)
  
  **Left clicking** will increment(+) the data value by 1
+ 
  **Right clicking** will decrement(-) the data value by 1 (effectively going in the reverse direction as left clicking)
 
 The default item for this tool is the bone (352), but you can change this to any item in the configuration file.
@@ -107,7 +108,6 @@ Changelog
 
 **v0.4**
  
- - Incremented version to 0.4
  - Separated duplicator and data tool functionality into two seperate tools
  - Changed how the "bdtools" function works internally - it will now give the player all tools that they have permission to use
  - added /datatool command to summon a data tool
