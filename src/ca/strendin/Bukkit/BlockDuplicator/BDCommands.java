@@ -218,7 +218,7 @@ public class BDCommands {
      */
     public static void givePlayerDataTool(Player thisPlayer) {
         ItemStack PaintBrushToolItem = new ItemStack(DataTool,(short)1,(byte)0);
-        BDLogging.sendPlayer(thisPlayer, "Giving data tool: " + BDLogging.itemColor + PaintBrushToolItem.getType());
+        BDLogging.sendPlayer(thisPlayer, "Giving Data tool: " + BDLogging.itemColor + PaintBrushToolItem.getType());
         BDLogging.logThis("[TOOLS] Giving " + thisPlayer.getDisplayName() + " a data tool (" + PaintBrushToolItem.getType() + ")");
         
         thisPlayer.getInventory().addItem(PaintBrushToolItem);
