@@ -1,6 +1,6 @@
 name: BlockDuplicator
 main: ca.strendin.Bukkit.BlockDuplicator.BlockDuplicator
-version: 0.4
+version: 0.4.1
 website: http://forums.bukkit.org
 authors:
   - Mark Strendin
@@ -37,7 +37,7 @@ commands:
     usage: |
            /<command>
   bdtools:
-    aliases: [bdt]
+    aliases: [bdt, tools]
     description: Gives you the duplicator, data and paintbrush tools
     usage: |
            /<command>

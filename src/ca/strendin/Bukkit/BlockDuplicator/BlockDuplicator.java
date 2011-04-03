@@ -22,13 +22,11 @@ public class BlockDuplicator extends JavaPlugin {
     
     @Override
     public void onLoad() {
-        // This is called *before* onEnable
     }  
     
     @Override
     public void onDisable() {        
-        System.out.println(this.getDescription().getName() + " disabled");
-        
+        System.out.println(this.getDescription().getName() + " disabled");        
     }
 
     @Override
@@ -101,7 +99,7 @@ public class BlockDuplicator extends JavaPlugin {
                 } else {                    
                     BDLogging.permDenyMsg(requestplayer);
                 }               
-            } else if ((commandLabel.equalsIgnoreCase("bdtools")) || (commandLabel.equalsIgnoreCase("bdt"))) {                
+            } else if ((commandLabel.equalsIgnoreCase("bdtools")) || (commandLabel.equalsIgnoreCase("bdt")) || (commandLabel.equalsIgnoreCase("tools"))) {                
                 if (BDPermissions.canUsePaintbrushTool(requestplayer)) {
                     BDCommands.givePlayerPaintbrushTool(requestplayer);
                 }
@@ -118,7 +116,7 @@ public class BlockDuplicator extends JavaPlugin {
                     // Try to reload the config file
                     try {
                         loadConfigFile();
-                        BDLogging.sendPlayer(requestplayer,"BlockDuplicator config file reloaded!");
+                        BDLogging.sendPlayer(requestplayer,this.getDescription().getFullName() + " reloaded!");
                         BDLogging.logThis("Configuration file reloaded by " + requestplayer.getDisplayName());
                     } catch (IOException e) {
                         BDLogging.sendPlayerError(requestplayer, ChatColor.RED + "IOException when attempting to reload the config file");                        
@@ -154,8 +152,6 @@ public class BlockDuplicator extends JavaPlugin {
         FileInputStream fs = new FileInputStream(new File(this.getDataFolder(), configFileName));
     
         configSettings.load(fs);
-        
-        BDLogging.logThis("Config file loaded!");        
         
         int givenDuplicatorToolID = BDCommands.DuplicatorTool;
         int givenPaintBrushToolID = BDCommands.PaintBrushTool;
@@ -235,6 +231,7 @@ public class BlockDuplicator extends JavaPlugin {
         }
         
         fs.close();
+        BDLogging.logThis("Config file loaded!");
     }
     
     

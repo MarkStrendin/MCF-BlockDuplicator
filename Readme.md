@@ -3,7 +3,7 @@ BlockDuplicator
 
 This bukkit plugin can be used to easily duplicate blocks.
 
-Most recent CraftBukkit version tested with: 600
+Most recent CraftBukkit version tested with: 621
 
 **Compatibility note:** Version 0.3.2 requires CraftBukkit build 561 or above, and will not work on earlier builds (use BlockDuplicator 0.3.1 for earlier versions)
 
@@ -60,9 +60,9 @@ Commands
     /duplicator   		Gives the player the duplicator tool (alias: /duper)
     /paintbrush			Gives the player the paintbrush tool (alias: /painter)
     /datatool			Gives the player the data tool
-    /bdtools			Gives the player one of each tool that they have permission to use    					 
-    /clearinv      		Clears the player's inventory (alias: /cli)    
-    /more          		Gives the player duplicate stacks of whatever he/she is holding (ex: "/m 4" would give you 4 additional stacks) (alias: /m)    
+    /bdtools			Gives the player one of each tool that they have permission to use (alias: bdt, tools)
+    /clearinv      		Clears the player's inventory (alias: /ci)
+    /more          		Gives the player duplicate stacks of whatever he/she is holding (ex: "/m 4" would give you 4 additional stacks) (alias: /m)
     /pick          		Allows the player to change the data value of the item in their hand (for wool colors, single step types, etc)
 
 
