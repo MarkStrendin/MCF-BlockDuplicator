@@ -43,12 +43,13 @@ public class BDPlayerListener extends PlayerListener {
                 // Duplicator tool
                 
                 if (BDPermissions.canUseDuplicatorTool(event.getPlayer())) {
+                    event.setCancelled(true);
                     BDTool.duplicatorToolHandler(event.getPlayer(), event.getClickedBlock());
                 }
                             
-            } else if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.PaintBrushTool) {
-                
+            } else if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.PaintBrushTool) {                
                 if (BDPermissions.canUsePaintbrushTool(event.getPlayer())) {
+                    event.setCancelled(true);
                     BDTool.dataPasteHandler(event.getPlayer(), event.getClickedBlock());                
                 }
             } else if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.DataTool) {
