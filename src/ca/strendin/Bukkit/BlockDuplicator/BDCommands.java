@@ -93,6 +93,7 @@ public class BDCommands {
             case 53: MaxData = 3; break;   
             case 67: MaxData = 3; break;
             case 18: MaxData = 2; break;
+            case 6: MaxData = 2; break;
             }
             
             /* 
