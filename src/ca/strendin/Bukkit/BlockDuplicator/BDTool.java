@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 public class BDTool {
     
     // Storage for player block data
-    private static Hashtable<Player,Block> PlayerBlockStorage = new Hashtable<Player,Block>();
+    private static Hashtable<Player,Block> PlayerBlockStorage = new Hashtable<Player,Block>();    
     
     public final static void removePlayerFromStorageList(Player player) {
         if (PlayerBlockStorage.containsKey(player)) {

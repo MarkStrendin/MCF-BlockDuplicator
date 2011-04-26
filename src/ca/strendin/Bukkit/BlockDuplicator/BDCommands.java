@@ -16,6 +16,8 @@ public class BDCommands {
     public static int DuplicatorTool = 275;
     public static int DataTool = 352;
     public static int PaintBrushTool = 341;
+    public static int RegionTool = 281;
+    public static int InfoTool = 286;
     
     //static ChatColor textColor = ChatColor.DARK_GREEN;
 
@@ -218,11 +220,22 @@ public class BDCommands {
      * Gives the player a data tool
      */
     public static void givePlayerDataTool(Player thisPlayer) {
-        ItemStack PaintBrushToolItem = new ItemStack(DataTool,(short)1,(byte)0);
-        BDLogging.sendPlayer(thisPlayer, "Giving Data tool: " + BDLogging.itemColor + PaintBrushToolItem.getType());
-        BDLogging.logThis("[TOOLS] Giving " + thisPlayer.getDisplayName() + " a data tool (" + PaintBrushToolItem.getType() + ")");
+        ItemStack DataToolItem = new ItemStack(DataTool,(short)1,(byte)0);
+        BDLogging.sendPlayer(thisPlayer, "Giving Data tool: " + BDLogging.itemColor + DataToolItem.getType());
+        BDLogging.logThis("[TOOLS] Giving " + thisPlayer.getDisplayName() + " a data tool (" + DataToolItem.getType() + ")");
         
-        thisPlayer.getInventory().addItem(PaintBrushToolItem);
+        thisPlayer.getInventory().addItem(DataToolItem);
+    }
+    
+    /*
+     * Gives the player a region tool
+     */
+    public static void givePlayerRegionTool(Player thisPlayer) {
+        ItemStack RegionToolItem = new ItemStack(RegionTool,(short)1,(byte)0);
+        BDLogging.sendPlayer(thisPlayer, "Giving Data tool: " + BDLogging.itemColor + RegionToolItem.getType());
+        BDLogging.logThis("[TOOLS] Giving " + thisPlayer.getDisplayName() + " a data tool (" + RegionToolItem.getType() + ")");
+        
+        thisPlayer.getInventory().addItem(RegionToolItem);
     }
 
     

@@ -10,13 +10,19 @@ public class BDLogging {
     public static final Logger log = Logger.getLogger("Minecraft");
     
     private static ChatColor normalColor = ChatColor.DARK_GREEN;
+    private static ChatColor infoColor = ChatColor.AQUA;
     private static ChatColor errorColor = ChatColor.RED;
 
     // Public so that BDCommands methods can see it
     public static ChatColor itemColor = ChatColor.GREEN;
    
+    
     public static void sendPlayer(Player tothisplayer, String message) {
         tothisplayer.sendMessage(normalColor + message);        
+    }
+    
+    public static void sendPlayerInfo(Player tothisplayer, String message) {
+        tothisplayer.sendMessage(infoColor + message);        
     }
     
     public static void logThis(String message) {

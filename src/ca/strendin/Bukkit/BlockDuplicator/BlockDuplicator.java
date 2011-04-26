@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -13,6 +14,8 @@ import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import ca.strendin.Bukkit.BlockDuplicator.commands.bdregionCommand;
 
 public class BlockDuplicator extends JavaPlugin {
     
@@ -31,6 +34,7 @@ public class BlockDuplicator extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        System.out.println(this.getDescription().getName() + " v" + this.getDescription().getVersion() + " enabled");
         
         // Permissions
         BDPermissions.initPermissions(getServer());
@@ -39,7 +43,6 @@ public class BlockDuplicator extends JavaPlugin {
         try {
             loadConfigFile();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             BDLogging.sendConsole("Config file could not be loaded!");
             
             try {
@@ -49,14 +52,19 @@ public class BlockDuplicator extends JavaPlugin {
             }
         }
         
-        System.out.println(this.getDescription().getName() + " v" + this.getDescription().getVersion() + " enabled");
+        CuboidRegionHandler.initRegions(this);        
 
         // Register events
         PluginManager pm = getServer().getPluginManager();        
         pm.registerEvent(Event.Type.PLAYER_INTERACT, this.playerListener, Priority.Normal, this);        
         pm.registerEvent(Event.Type.PLAYER_QUIT, this.playerListener, Event.Priority.Normal, this);
+               
+        // Commands
+        getCommand("bdregion").setExecutor(new bdregionCommand(this));
+       
     }
     
+    //TODO: Clean this up so it isn't such a monster
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args ) {
         if (sender instanceof Player) {
             
@@ -110,7 +118,11 @@ public class BlockDuplicator extends JavaPlugin {
                 
                 if (BDPermissions.canUseDuplicatorTool(requestplayer)) {
                     BDCommands.givePlayerDuplicatorTool(requestplayer);
-                }               
+                }
+                
+                if (BDPermissions.canManageRegions(requestplayer)) {
+                    BDCommands.givePlayerRegionTool(requestplayer);
+                }
             } else if ((commandLabel.equalsIgnoreCase("blockduplicator")) || (commandLabel.equalsIgnoreCase("bdreload"))) {
                 if (BDPermissions.canReload(requestplayer)) {
                     // Try to reload the config file
@@ -124,7 +136,8 @@ public class BlockDuplicator extends JavaPlugin {
                 } else {
                     BDLogging.permDenyMsg(requestplayer);
                 }
-            }
+            }  
+            
         } else {
             if ((commandLabel.equalsIgnoreCase("blockduplicator")) || (commandLabel.equalsIgnoreCase("bdreload"))) {                
                 try {
@@ -141,7 +154,7 @@ public class BlockDuplicator extends JavaPlugin {
         return true;        
     }
     
-    
+  
     /*
      * Loads the config file data into appropriate places
      */

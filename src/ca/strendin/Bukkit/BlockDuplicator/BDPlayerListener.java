@@ -11,7 +11,6 @@ public class BDPlayerListener extends PlayerListener {
         plugin = thisplugin;
     }
     
-    
     public void onPlayerQuit(PlayerQuitEvent event) {
         BDTool.removePlayerFromStorageList(event.getPlayer()); 
     }
@@ -24,40 +23,68 @@ public class BDPlayerListener extends PlayerListener {
                 // This functionality has been moved to the data tool
                 
             } else if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.PaintBrushTool) {
-                // Paintbrush tool
-                
+                // Paintbrush tool            
                 if (BDPermissions.canUsePaintbrushTool(event.getPlayer())) {
-                    event.setCancelled(true);
-                    BDTool.dataSetterHandler(event.getPlayer(), event.getClickedBlock());                
+                    if (CuboidRegionHandler.canSetInkHere(event.getPlayer(), event.getClickedBlock())) {
+                        event.setCancelled(true);
+                        BDTool.dataSetterHandler(event.getPlayer(), event.getClickedBlock());                
+                    } else {
+                        BDLogging.sendPlayerError(event.getPlayer(), "Sorry, using that tool is not allowed in this area");
+                    }
                 }
             } else if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.DataTool) {
                 // Data tool
                 
                 if (BDPermissions.canUseDataTool(event.getPlayer())) {
+                    if (CuboidRegionHandler.canDataCycleHere(event.getPlayer(), event.getClickedBlock())) {
+                        event.setCancelled(true);
+                        BDTool.dataToolHandler(event.getPlayer(),event.getClickedBlock());    
+                    } else {
+                        BDLogging.sendPlayerError(event.getPlayer(), "Sorry, using that tool is not allowed in this area");
+                    }                    
+                }
+            } else if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.RegionTool) { 
+                if (BDPermissions.canManageRegions(event.getPlayer())) {
                     event.setCancelled(true);
-                    BDTool.dataToolHandler(event.getPlayer(),event.getClickedBlock());
+                    CuboidRegionHandler.getRegionInfoHere(event.getPlayer(), event.getClickedBlock());                    
                 }
             }
+            
         } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.DuplicatorTool) {
                 // Duplicator tool
-                
                 if (BDPermissions.canUseDuplicatorTool(event.getPlayer())) {
-                    event.setCancelled(true);
-                    BDTool.duplicatorToolHandler(event.getPlayer(), event.getClickedBlock());
-                }
-                            
+                    if (CuboidRegionHandler.canDuplicateHere(event.getPlayer(), event.getClickedBlock())) {
+                        event.setCancelled(true);
+                        BDTool.duplicatorToolHandler(event.getPlayer(), event.getClickedBlock());
+                    } else {
+                        BDLogging.sendPlayerError(event.getPlayer(), "Sorry, using that tool is not allowed in this area");
+                    }
+                }                            
             } else if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.PaintBrushTool) {                
                 if (BDPermissions.canUsePaintbrushTool(event.getPlayer())) {
-                    event.setCancelled(true);
-                    BDTool.dataPasteHandler(event.getPlayer(), event.getClickedBlock());                
+                    if (CuboidRegionHandler.canPaintHere(event.getPlayer(), event.getClickedBlock())) {
+                        event.setCancelled(true);
+                        BDTool.dataPasteHandler(event.getPlayer(), event.getClickedBlock());                
+                    } else {
+                        BDLogging.sendPlayerError(event.getPlayer(), "Sorry, using that tool is not allowed in this area");
+                    }
                 }
             } else if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.DataTool) {
                 if (BDPermissions.canUseDataTool(event.getPlayer())) {
-                    event.setCancelled(true);
-                    BDTool.dataToolHandler(event.getPlayer(),event.getClickedBlock(),true);
+                    if (CuboidRegionHandler.canDataCycleHere(event.getPlayer(), event.getClickedBlock())) {                     
+                        event.setCancelled(true);
+                        BDTool.dataToolHandler(event.getPlayer(),event.getClickedBlock(),true);                 
+                    } else {
+                        BDLogging.sendPlayerError(event.getPlayer(), "Sorry, using that tool is not allowed in this area");
+                    }
                 }
-            }  
+            } else if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.RegionTool) { 
+                if (BDPermissions.canManageRegions(event.getPlayer())) {
+                    event.setCancelled(true);
+                    CuboidRegionHandler.inputCoordinate(event.getPlayer(), event.getClickedBlock());                    
+                }
+            }
         }
     }
     

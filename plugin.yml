@@ -1,7 +1,7 @@
 name: BlockDuplicator
 main: ca.strendin.Bukkit.BlockDuplicator.BlockDuplicator
-version: 0.4.2
-website: http://forums.bukkit.org
+version: 0.5
+website: https://github.com/MarkStrendin/BlockDuplicator
 authors:
   - Mark Strendin
 description: Duplicates blocks
@@ -45,4 +45,9 @@ commands:
     aliases: [bdreload]
     description: Reloads the configuration file
     usage: |
-           /<command>              
+           /<command>  
+  bdregion:
+    aliases: []
+    description: Creates and manages BlockDuplicator regions
+    usage: |
+           /<command>            

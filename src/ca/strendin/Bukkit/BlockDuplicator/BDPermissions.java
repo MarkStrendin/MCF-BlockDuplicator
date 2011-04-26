@@ -81,8 +81,7 @@ public class BDPermissions {
     public static boolean canUseDuplicatorTool(Player player) {
         return hasPermission(player,"blockduplicator.tools.duplicator",true);
     }
-    
-    
+        
     /*
      * Access to the paintbrush tool
      */
@@ -95,6 +94,20 @@ public class BDPermissions {
      */
     public static boolean canReload(Player player) {
         return hasPermission(player,"blockduplicator.reload",player.isOp());
+    }
+    
+    /*
+     * Ability to manage regions
+     */
+    public static boolean canManageRegions(Player player) {
+        return hasPermission(player,"blockduplicator.region.manage",player.isOp());
+    }
+    
+    /*
+     * Ignore regions
+     */
+    public static boolean ignoresRegions(Player player) {
+        return hasPermission(player,"blockduplicator.region.ignore",player.isOp());
     }
     
     
