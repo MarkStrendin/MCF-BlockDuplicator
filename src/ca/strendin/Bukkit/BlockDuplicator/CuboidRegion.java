@@ -20,6 +20,7 @@ public class CuboidRegion implements Serializable {
     private int iLowZ;
     private String sOwner;
     private String sName;
+    private String sWorld;
 
     // If the location is in a region, returns that region. Otherwise returns null.
     public static CuboidRegion getRegion(ArrayList<CuboidRegion> regionList,Location thisLocation) {
@@ -31,12 +32,14 @@ public class CuboidRegion implements Serializable {
         
         boolean returnMe = false;
         
-        if ((thisLocation.getBlockX() >= iLowX)  && (thisLocation.getBlockX() <= iHighX)) {
-            if ((thisLocation.getBlockY() >= iLowY)  && (thisLocation.getBlockY() <= iHighY)) {
-                if ((thisLocation.getBlockZ() >= iLowZ)  && (thisLocation.getBlockZ() <= iHighZ)) {
-                    returnMe = true;
-                }
-            }            
+        if (thisLocation.getWorld().getName().equals(sWorld)) {        
+            if ((thisLocation.getBlockX() >= iLowX)  && (thisLocation.getBlockX() <= iHighX)) {
+                if ((thisLocation.getBlockY() >= iLowY)  && (thisLocation.getBlockY() <= iHighY)) {
+                    if ((thisLocation.getBlockZ() >= iLowZ)  && (thisLocation.getBlockZ() <= iHighZ)) {
+                        returnMe = true;
+                    }
+                }            
+            }
         }
                 
         return returnMe;
@@ -48,6 +51,10 @@ public class CuboidRegion implements Serializable {
     
     public String getOwner() {
         return sOwner;
+    }
+    
+    public String getWorld() {
+        return sWorld;
     }
     
     public String getCoordinateString() {
@@ -94,6 +101,8 @@ public class CuboidRegion implements Serializable {
         // For coordinates, make sure that the high and low values get sorted out properly
         sName = regionName;
         sOwner = owner.getDisplayName();
+        sWorld = preRegion.loc1.getWorld().getName();
+        
         
         
         // Defaults

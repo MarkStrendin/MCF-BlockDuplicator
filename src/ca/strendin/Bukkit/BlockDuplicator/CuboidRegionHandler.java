@@ -102,6 +102,7 @@ public class CuboidRegionHandler {
     public static void sendRegionInfo(Player player, CuboidRegion specifiedRegion) {        
         BDLogging.sendPlayer(player, "Info for region \""+specifiedRegion.getName()+"\":");
         BDLogging.sendPlayerInfo(player," Coordinates: " + specifiedRegion.getCoordinateString());
+        BDLogging.sendPlayerInfo(player," World: " + specifiedRegion.getWorld());        
         BDLogging.sendPlayerInfo(player," Creator: " + specifiedRegion.getOwner());
         BDLogging.sendPlayerInfo(player," Allow duplicator: " + specifiedRegion.canDuplicate());
         BDLogging.sendPlayerInfo(player," Allow data scrolling: " + specifiedRegion.canDataCycle());
@@ -190,7 +191,7 @@ public class CuboidRegionHandler {
         
         for (CuboidRegion thisRegion : regions) {
             if (thisRegion.isInThisRegion(blockLocation)) {
-                sendRegionInfo(thePlayer,thisRegion);
+                sendRegionInfo(thePlayer,thisRegion);                               
                 foundMatch = true;
             }
         }
