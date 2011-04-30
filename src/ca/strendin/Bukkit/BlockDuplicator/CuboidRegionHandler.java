@@ -14,6 +14,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CuboidRegionHandler {   
     
@@ -94,9 +96,30 @@ public class CuboidRegionHandler {
     //TODO: Actually sanitize the string
     public static String sanitizeInput(String input) {
         
+        String working = null;
+        
+        // Only allow a region name to be 20 characters long (just because)
+        // only allow a region name to be lower case
+        if (input.length() > 20) {
+            working = input.substring(0, 20).toLowerCase();            
+        } else {
+            working = input.toLowerCase();
+        }
+        
         // only output alphabet characters and numbers - remove anything else
         
-        return input;
+        String REGEX = "[^a-z0-9]";
+        
+        Pattern p = Pattern.compile(REGEX);
+        Matcher m = p.matcher(working); // get a matcher object
+        StringBuffer sb = new StringBuffer();
+        while (m.find()) {
+          m.appendReplacement(sb, "");
+        }
+        m.appendTail(sb);
+        
+        working = sb.toString();
+        return working;
     }
     
     public static void sendRegionInfo(Player player, CuboidRegion specifiedRegion) {        
@@ -147,7 +170,7 @@ public class CuboidRegionHandler {
             CuboidRegion newRegion = new CuboidRegion(sanitizeInput(regionName.toLowerCase()), thePlayer,preRegions.get(thePlayer));           
             regions.add(newRegion);
             saveAllRegions();
-            BDLogging.sendPlayer(thePlayer, "New region created: " + ChatColor.AQUA + regionName.toLowerCase());
+            BDLogging.sendPlayer(thePlayer, "New region created: " + ChatColor.AQUA + sanitizeInput(regionName.toLowerCase()));
         } else {
             BDLogging.sendPlayerError(thePlayer, "Not ready to create a region yet!");
         }        
