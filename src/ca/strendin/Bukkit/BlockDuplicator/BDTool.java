@@ -98,6 +98,7 @@ public class BDTool {
         case 86: MaxData = 3; break;    // Pumpkins (changes direction)
         case 91: MaxData = 3; break;    // Jack-o-lanterns (changes direction)
         case 6: MaxData = 2; break;     // Saplings
+        case 31: MaxData = 2; break;     // Tall Grass
         }
         
         // If the block ID was on the list, go ahead and cycle it's data

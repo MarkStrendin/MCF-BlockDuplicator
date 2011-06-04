@@ -5,7 +5,7 @@ BlockDuplicator
 
 This bukkit plugin can be used to assist a player in building something creative, without the need to gather and craft blocks, but without the chaos that can ensue by giving all players access to item spawning commands. It allows a server admin to easily run a hybrid creative / survival server, where allowing players access to creative-oriented commands and tools does not affect the players who wish to play pure survival.
 
-Most recent CraftBukkit version tested with: 740
+Most recent CraftBukkit version tested with: 818
 
 **Compatibility note:** Version 0.3.2 requires CraftBukkit build 561 or above, and will not work on earlier builds (use BlockDuplicator 0.3.1 for earlier versions)
 
@@ -31,6 +31,7 @@ Clicking a block will cycle it's data values. Block types that can be changed ar
  - Logs (Normal, Redwood, Birch)
  - Steps (direction of the steps)
  - Pumpkins and Jack-o-Lanterns (direction)
+ - Tall Grass (Tall Grass,Shrubs,Ferns)
  
  
 **Left clicking** will increment(+) the data value by 1
