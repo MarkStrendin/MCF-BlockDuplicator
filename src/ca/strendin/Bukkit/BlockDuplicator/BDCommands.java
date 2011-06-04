@@ -185,8 +185,10 @@ public class BDCommands {
         case 43: returnMe = true; break; // double step
         case 17: returnMe = true; break; // logs
         case 35: returnMe = true; break; // wool
-        case 53: returnMe = true; break; //wood step    
+        case 53: returnMe = true; break; // wood step    
         case 67: returnMe = true; break; // stone step
+        case 6: returnMe = true; break;  // Saplings
+        // case 31: returnMe = true; break; // Tall Grass will always be a dead shrub if placed
         
         // Leaves don't work so well
         //case 18: returnMe = true; break; // leaves   

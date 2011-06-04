@@ -177,6 +177,16 @@ Regions are saved as datafiles whenever they are modified. Currently, they are s
 Changelog
 ---------
 
+**v0.6.1**
+
+- Fixed a bug where sapling data value was not copied if the sapling was a redwood or birch
+
+**v0.6**
+
+ - Updated for Minecraft 1.6
+ - Can now data cycle Tall Grass/Ferns/Dead shrubs (when the shrub is placed on grass)
+ 
+
 **v0.5**
 
  - Added support for regions
