@@ -16,6 +16,7 @@ public class BDPlayerListener extends PlayerListener {
     }
             
     public void onPlayerInteract(PlayerInteractEvent event) {
+        
         if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
             if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.DuplicatorTool) {
                 // Duplicator tool

@@ -36,9 +36,6 @@ public class BlockDuplicator extends JavaPlugin {
     public void onEnable() {
         System.out.println(this.getDescription().getName() + " v" + this.getDescription().getVersion() + " enabled");
         
-        // Permissions
-        BDPermissions.initPermissions(getServer());
-
         // Load config file
         try {
             loadConfigFile();

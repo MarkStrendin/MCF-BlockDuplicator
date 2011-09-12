@@ -34,9 +34,9 @@ public class bdregionCommand implements CommandExecutor {
                         HandleListCommand(requestplayer,args);                    
                     } else if (param.toLowerCase().equals("remove")) {
                         HandleRemoveCommand(requestplayer,args);               
-                    } else if (param.toLowerCase().equals("save")) {
-                        HandleLoadCommand(requestplayer,args);
                     } else if (param.toLowerCase().equals("load")) {
+                        HandleLoadCommand(requestplayer,args);
+                    } else if (param.toLowerCase().equals("save")) {
                         HandleSaveCommand(requestplayer,args);
                     } else if (param.toLowerCase().equals("info")) {
                         HandleInfoCommand(requestplayer,args);

@@ -1,10 +1,57 @@
 name: BlockDuplicator
 main: ca.strendin.Bukkit.BlockDuplicator.BlockDuplicator
-version: 0.6
+version: 0.6a
 website: https://github.com/MarkStrendin/BlockDuplicator
 authors:
   - Mark Strendin
-description: Duplicates blocks
+description: Duplicates blocks and other things
+
+permissions:
+  blockduplicator.admin:
+    description: Access to admin tools and commands
+    children:
+      blockduplicator.reload: true
+      blockduplicator.region.manage: true
+  blockduplicator.commands:
+    description: Access to all commands
+    children:
+      blockduplicator.commands.more: true
+      blockduplicator.commands.clearinv: true
+      blockduplicator.commands.pick: true
+  blockduplicator.tools:
+    description: Access to user tools (not region or info tools)
+    children: 
+      blockduplicator.tools.data: true
+      blockduplicator.tools.duplicator: true
+      blockduplicator.tools.paintbrush: true
+  blockduplicator.commands.more:
+    description: Allows access to the /m command 
+    default: op
+  blockduplicator.commands.clearinv:
+    description: Allows access to the /ci command 
+    default: op
+  blockduplicator.commands.pick:
+    description: Allows access to the /pick command 
+    default: op
+  blockduplicator.tools.data:
+    description: Allows access to the data tool 
+    default: op 
+  blockduplicator.tools.duplicator:
+    description: Allows access to the duplicator tool
+    default: op
+  blockduplicator.tools.paintbrush:
+    description: Allows access to the paintbrush tool 
+    default: op
+  
+  blockduplicator.reload:
+    description: Allows the user to reload BlockDuplicator's configuration
+    default: op 
+  blockduplicator.region.manage:
+    description: Allows the user to manage regions 
+    default: op 
+  blockduplicator.region.ignore:
+    description: Players with this permission ignore region limitations 
+    default: op
 commands:
   clearinv:
     aliases: [ci]
