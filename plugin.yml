@@ -41,8 +41,7 @@ permissions:
     default: op
   blockduplicator.tools.paintbrush:
     description: Allows access to the paintbrush tool 
-    default: op
-  
+    default: op  
   blockduplicator.reload:
     description: Allows the user to reload BlockDuplicator's configuration
     default: op 
