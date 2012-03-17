@@ -10,16 +10,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import ca.strendin.Bukkit.BlockDuplicator.commands.bdregionCommand;
 
-public class BlockDuplicator extends JavaPlugin {
-    
-    private final BDPlayerListener playerListener = new BDPlayerListener(this);
+public class BlockDuplicator extends JavaPlugin {   
     private static String configFileName = "BlockDuplicator.config";  
     public static Properties configSettings = new Properties();
     
@@ -53,8 +49,11 @@ public class BlockDuplicator extends JavaPlugin {
 
         // Register events
         PluginManager pm = getServer().getPluginManager();        
-        pm.registerEvent(Event.Type.PLAYER_INTERACT, this.playerListener, Priority.Normal, this);        
-        pm.registerEvent(Event.Type.PLAYER_QUIT, this.playerListener, Event.Priority.Normal, this);
+        pm.registerEvents(new BDPlayerListener(this), this);
+        
+        
+        //pm.registerEvent(Event.Type.PLAYER_INTERACT, this.playerListener, Priority.Normal, this);        
+        //pm.registerEvent(Event.Type.PLAYER_QUIT, this.playerListener, Event.Priority.Normal, this);
                
         // Commands
         getCommand("bdregion").setExecutor(new bdregionCommand(this));

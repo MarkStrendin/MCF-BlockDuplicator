@@ -1,20 +1,23 @@
 package ca.strendin.Bukkit.BlockDuplicator;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class BDPlayerListener extends PlayerListener {
+public class BDPlayerListener implements Listener {
     public static BlockDuplicator plugin;
 
     public BDPlayerListener(BlockDuplicator thisplugin) {
         plugin = thisplugin;
     }
     
+    @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         BDTool.removePlayerFromStorageList(event.getPlayer()); 
     }
-            
+    
+    @EventHandler        
     public void onPlayerInteract(PlayerInteractEvent event) {
         
         if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
