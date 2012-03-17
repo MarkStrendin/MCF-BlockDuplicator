@@ -24,7 +24,7 @@ public class BDCommands {
     /*
      * These blocks play nicely with the paint tool    
      */
-    private static int[] PaintSafeBlocks = {1,2,3,4,5,12,13,14,15,16,17,18,19,20,21,22,24,25,35,41,42,43,44,45,47,48,49,53,56,57,58,60,67,73,74,80,82,84,85,86,87,88,89,91,92};
+    private static int[] PaintSafeBlocks = {1,2,3,4,5,12,13,14,15,16,17,18,19,20,21,22,24,25,35,41,42,43,44,45,47,48,49,53,56,57,58,60,67,73,74,80,82,84,85,86,87,88,89,91,92,98,99,100,101,102,103,108,109,110,112,113,114,118,121,123};
     
     //public static int[] denied_blocks;
     public static ArrayList<Integer> denied_blocks = new ArrayList<Integer>();
@@ -88,14 +88,14 @@ public class BDCommands {
             
             int MaxData = -1;
             switch (thisplayer.getItemInHand().getTypeId()) {
-            case 44: MaxData = 3; break;
-            case 43: MaxData = 3; break;
-            case 17: MaxData = 2; break;
-            case 35: MaxData = 15; break;   
-            case 53: MaxData = 3; break;   
-            case 67: MaxData = 3; break;
-            case 18: MaxData = 2; break;
-            case 6: MaxData = 2; break;
+            case 44: MaxData = 5; break; /* Slabs */
+            case 43: MaxData = 5; break; /* Double slabs */
+            case 17: MaxData = 2; break; /* Logs */
+            case 35: MaxData = 15; break; /* Wool */ 
+            case 18: MaxData = 3; break; /* Leaves */
+            case 6: MaxData = 3; break; /* Saplings */
+            case 98: MaxData = 3; break; /* Stone Brick */
+            
             }
             
             /* 
@@ -188,6 +188,9 @@ public class BDCommands {
         case 53: returnMe = true; break; // wood step    
         case 67: returnMe = true; break; // stone step
         case 6: returnMe = true; break;  // Saplings
+        case 108: returnMe = true; break;  // Brick Stairs
+        case 109: returnMe = true; break;  // Stone Brick Stairs
+        
         // case 31: returnMe = true; break; // Tall Grass will always be a dead shrub if placed
         
         // Leaves don't work so well

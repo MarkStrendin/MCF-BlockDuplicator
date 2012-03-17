@@ -88,17 +88,21 @@ public class BDTool {
         
         int MaxData = -1;
         switch (block.getTypeId()) {
-        case 44: MaxData = 3; break;    // Double steps
-        case 43: MaxData = 3; break;    // Single steps
+        case 44: MaxData = 5; break;    // Double steps
+        case 43: MaxData = 5; break;    // Single steps
         case 17: MaxData = 2; break;    // Logs
         case 35: MaxData = 15; break;   // Wool
         case 53: MaxData = 3; break;    // Wooden stairs
         case 67: MaxData = 3; break;    // Cobblestone stairs
-        case 18: MaxData = 2; break;    // Leaves
+        case 18: MaxData = 3; break;    // Leaves
         case 86: MaxData = 3; break;    // Pumpkins (changes direction)
         case 91: MaxData = 3; break;    // Jack-o-lanterns (changes direction)
-        case 6: MaxData = 2; break;     // Saplings
-        case 31: MaxData = 2; break;     // Tall Grass
+        case 6: MaxData = 3; break;     // Saplings
+        case 31: MaxData = 2; break;     // Tall Grass         
+        case 108: MaxData = 3; break; /* Brick Stairs */
+        case 109: MaxData = 3; break; /* Stone Brick Stairs */
+        case 98: MaxData = 3; break; /* Stone Brick */
+        case 118: MaxData = 3; break; /* Cauldron */        
         }
         
         // If the block ID was on the list, go ahead and cycle it's data
@@ -125,9 +129,6 @@ public class BDTool {
             block.setData(setDataToByte);
         }
     }
-    
-    
-    
     
     @SuppressWarnings("deprecation")
     public final static void duplicatorToolHandler(Player player, Block block) {
