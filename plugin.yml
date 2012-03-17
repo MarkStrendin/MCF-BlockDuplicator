@@ -1,6 +1,6 @@
 name: BlockDuplicator
 main: ca.strendin.Bukkit.BlockDuplicator.BlockDuplicator
-version: 0.6a
+version: 0.7
 website: https://github.com/MarkStrendin/BlockDuplicator
 authors:
   - Mark Strendin

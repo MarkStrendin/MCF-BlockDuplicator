@@ -36,9 +36,13 @@ public class BDPlayerListener implements Listener {
                         BDLogging.sendPlayerError(event.getPlayer(), "Sorry, using that tool is not allowed in this area");
                     }
                 }
-            } else if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.DataTool) {
-                // Data tool
-                
+            } else if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.RegionTool) { 
+                if (BDPermissions.canManageRegions(event.getPlayer())) {
+                    event.setCancelled(true);
+                    CuboidRegionHandler.getRegionInfoHere(event.getPlayer(), event.getClickedBlock());                    
+                }
+            } /* else if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.DataTool) {
+                // Data tool                
                 if (BDPermissions.canUseDataTool(event.getPlayer())) {
                     if (CuboidRegionHandler.canDataCycleHere(event.getPlayer(), event.getClickedBlock())) {
                         event.setCancelled(true);
@@ -47,12 +51,10 @@ public class BDPlayerListener implements Listener {
                         BDLogging.sendPlayerError(event.getPlayer(), "Sorry, using that tool is not allowed in this area");
                     }                    
                 }
-            } else if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.RegionTool) { 
-                if (BDPermissions.canManageRegions(event.getPlayer())) {
-                    event.setCancelled(true);
-                    CuboidRegionHandler.getRegionInfoHere(event.getPlayer(), event.getClickedBlock());                    
-                }
-            }
+            } 
+             - Commented out because for some reason this doesn't update the block on the client side, meaning the 
+               block's data value may be different than what the player expects. 
+            */
             
         } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (event.getPlayer().getItemInHand().getTypeId() == BDCommands.DuplicatorTool) {
