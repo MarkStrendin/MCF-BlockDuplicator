@@ -190,11 +190,9 @@ public class BDCommands {
         case 6: returnMe = true; break;  // Saplings
         case 108: returnMe = true; break;  // Brick Stairs
         case 109: returnMe = true; break;  // Stone Brick Stairs
-        
-        // case 31: returnMe = true; break; // Tall Grass will always be a dead shrub if placed
-        
-        // Leaves don't work so well
-        //case 18: returnMe = true; break; // leaves   
+        case 18: returnMe = true; break; // leaves
+        case 99: returnMe = true; break; // Huge brown mushroom
+        case 100: returnMe = true; break; // Huge red mushroom
         }
         return returnMe;
     }

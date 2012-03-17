@@ -102,7 +102,9 @@ public class BDTool {
         case 108: MaxData = 3; break; /* Brick Stairs */
         case 109: MaxData = 3; break; /* Stone Brick Stairs */
         case 98: MaxData = 3; break; /* Stone Brick */
-        case 118: MaxData = 3; break; /* Cauldron */        
+        case 118: MaxData = 3; break; /* Cauldron */ 
+        case 99: MaxData = 10; break; /* Huge brown mushroom */
+        case 100: MaxData = 10; break; /* Huge red mushroom */        
         }
         
         // If the block ID was on the list, go ahead and cycle it's data
