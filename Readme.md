@@ -5,7 +5,7 @@ BlockDuplicator
 
 This bukkit plugin can be used to assist a player in building something creative, without the need to gather and craft blocks, but without the chaos that can ensue by giving all players access to item spawning commands. It allows a server admin to easily run a hybrid creative / survival server, where allowing players access to creative-oriented commands and tools does not affect the players who wish to play pure survival.
 
-Most recent CraftBukkit version tested with: 1090
+Most recent CraftBukkit version tested with: 1.2.3 R0.2 (b2060jnks)
 
 Duplicator tool
 ---------------
