@@ -1,6 +1,6 @@
 name: BlockDuplicator
 main: ca.strendin.Bukkit.BlockDuplicator.BlockDuplicator
-version: 0.7
+version: 0.8
 website: https://github.com/MarkStrendin/BlockDuplicator
 authors:
   - Mark Strendin
@@ -19,11 +19,11 @@ permissions:
       blockduplicator.commands.clearinv: true
       blockduplicator.commands.pick: true
   blockduplicator.tools:
-    description: Access to user tools (not region or info tools)
+    description: Access to user tools (not region tool)
     children: 
-      blockduplicator.tools.data: true
       blockduplicator.tools.duplicator: true
       blockduplicator.tools.paintbrush: true
+      blockduplicator.tools.info: true
   blockduplicator.commands.more:
     description: Allows access to the /m command 
     default: op
@@ -33,14 +33,14 @@ permissions:
   blockduplicator.commands.pick:
     description: Allows access to the /pick command 
     default: op
-  blockduplicator.tools.data:
-    description: Allows access to the data tool 
-    default: op 
   blockduplicator.tools.duplicator:
     description: Allows access to the duplicator tool
     default: op
   blockduplicator.tools.paintbrush:
     description: Allows access to the paintbrush tool 
+    default: op 
+  blockduplicator.tools.info:
+    description: Allows access to the info tool 
     default: op  
   blockduplicator.reload:
     description: Allows the user to reload BlockDuplicator's configuration
@@ -68,7 +68,7 @@ commands:
     usage: |
            /<command> [value]
   duplicator:
-    aliases: [duper]
+    aliases: [duper,doop,dupe]
     description: Gives you the duplicator tool
     usage: |
            /<command> 
@@ -77,14 +77,9 @@ commands:
     description: Gives you the paintbrush tool
     usage: |
            /<command>
-  datatool:
-    aliases: []
-    description: Gives you the data tool
-    usage: |
-           /<command>
   bdtools:
     aliases: [bdt, tools]
-    description: Gives you the duplicator, data and paintbrush tools
+    description: Gives you the duplicator and paintbrush tools
     usage: |
            /<command>
   blockduplicator:
@@ -93,7 +88,7 @@ commands:
     usage: |
            /<command>  
   bdregion:
-    aliases: []
+    aliases: [bdr]
     description: Creates and manages BlockDuplicator regions
     usage: |
            /<command>            

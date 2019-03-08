@@ -122,15 +122,46 @@ public class CuboidRegionHandler {
         return working;
     }
     
-    public static void sendRegionInfo(Player player, CuboidRegion specifiedRegion) {        
-        BDLogging.sendPlayer(player, "Info for region \""+specifiedRegion.getName()+"\":");
-        BDLogging.sendPlayerInfo(player," Coordinates: " + specifiedRegion.getCoordinateString());
-        BDLogging.sendPlayerInfo(player," World: " + specifiedRegion.getWorld());        
-        BDLogging.sendPlayerInfo(player," Creator: " + specifiedRegion.getOwner());
-        BDLogging.sendPlayerInfo(player," Allow duplicator: " + specifiedRegion.canDuplicate());
-        BDLogging.sendPlayerInfo(player," Allow data scrolling: " + specifiedRegion.canDataCycle());
-        BDLogging.sendPlayerInfo(player," Allow setting ink: " + specifiedRegion.canStorePaint());
-        BDLogging.sendPlayerInfo(player," Allow applying ink: " + specifiedRegion.canApplyPaint());
+    private static String displayFlag(boolean thisBool, String flagName) {
+    	ChatColor trueColor = ChatColor.GREEN;
+    	ChatColor falseColor = ChatColor.RED;
+    	
+    	if (thisBool) {
+    		return trueColor + flagName;
+    	} else {
+    		return falseColor + flagName;    		
+    	}
+    	
+    }
+    
+    public static void sendRegionInfo(Player player, CuboidRegion specifiedRegion) {  
+    	ChatColor mainColour = ChatColor.AQUA;
+    	ChatColor valueColour = ChatColor.WHITE;
+    	
+        BDLogging.sendPlayer(player,mainColour + "Info for region \"" + valueColour +specifiedRegion.getName()+ mainColour +"\":");
+        BDLogging.sendPlayerInfo(player,mainColour +" Coordinates: " + valueColour + specifiedRegion.getCoordinateString());              
+        BDLogging.sendPlayerInfo(player,mainColour +" Owner: " + valueColour + specifiedRegion.getOwner());
+        BDLogging.sendPlayerInfo(player,mainColour +" Flags: " + displayFlag(specifiedRegion.canDuplicate(),"duplicate") + ", " 
+        + displayFlag(specifiedRegion.canDataCycle(),"datacycle") + ", "
+        + displayFlag(specifiedRegion.canStorePaint(),"setink") + ", "
+        + displayFlag(specifiedRegion.canApplyPaint(),"paint") + ", "
+        + displayFlag(specifiedRegion.canBreakBlocks(),"break") + ", "
+        + displayFlag(specifiedRegion.canExplode(),"explode") + ", "
+        + displayFlag(specifiedRegion.canPlayersEnter(),"players") + ", "
+        + displayFlag(specifiedRegion.canEnemyMobsSpawnHere(),"enemies") + ", "
+        + displayFlag(specifiedRegion.canAnnounceOnEnter(),"announce")
+        );
+        /*
+        BDLogging.sendPlayerInfo(player,mainColour +" Allow duplicator: " + valueColour + specifiedRegion.canDuplicate());
+        BDLogging.sendPlayerInfo(player,mainColour +" Allow data scrolling: " + valueColour + specifiedRegion.canDataCycle());
+        BDLogging.sendPlayerInfo(player,mainColour +" Allow setting ink: " + valueColour + specifiedRegion.canStorePaint());
+        BDLogging.sendPlayerInfo(player,mainColour +" Allow applying ink: " + valueColour + specifiedRegion.canApplyPaint());
+        BDLogging.sendPlayerInfo(player,mainColour +" Allow block breaking: " + valueColour + specifiedRegion.canBreakBlocks());
+        BDLogging.sendPlayerInfo(player,mainColour +" Allow explosion damage: " + valueColour + specifiedRegion.canExplode());
+        BDLogging.sendPlayerInfo(player,mainColour +" Allow enemies to spawn in region: " + valueColour + specifiedRegion.canEnemyMobsSpawnHere());
+        BDLogging.sendPlayerInfo(player,mainColour +" Allow other players to enter region: " + valueColour + specifiedRegion.canPlayersEnter());
+        BDLogging.sendPlayerInfo(player,mainColour +" Announce name on enter: " + valueColour + specifiedRegion.canAnnounceOnEnter());
+        */
     }
     
     public static void removeRegion (Player thePlayer, String regionName) {
@@ -161,6 +192,31 @@ public class CuboidRegionHandler {
             BDLogging.sendPlayerError(thePlayer, "Region not found");
         }
     }    
+
+	public static void setRegionOwner (Player thePlayer, String regionName, String newOwner) {
+	    
+	    boolean regionOwnerSet = false;        
+	    CuboidRegion foundRegion = null;
+	    
+	    for (CuboidRegion thisRegion : regions) {
+	        if (thisRegion.getName().endsWith(regionName)) {
+	            foundRegion = thisRegion;
+	            regionOwnerSet = true;
+	        }
+	    }
+	
+	    if (foundRegion != null) {
+	        if (regionOwnerSet = true) {
+	        	foundRegion.setOwner(newOwner);	            
+	        }
+	    }
+	    
+	    if (regionOwnerSet) {            
+	        BDLogging.sendPlayer(thePlayer, "Region owner set to " + newOwner);
+	    } else {
+	        BDLogging.sendPlayerError(thePlayer, "Region not found");
+	    }
+	}    
     
     public static void createRegion(Player thePlayer, String regionName) {
         // Coordinates should already be stored in the preRegions hashtable        
@@ -223,6 +279,31 @@ public class CuboidRegionHandler {
             BDLogging.sendPlayerInfo(thePlayer,"No regions here!");
         }
     }
+    
+    public static CuboidRegion getRegionHere(Block thisBlock) {
+        // Go through list of regions and check
+        
+        Location blockLocation = thisBlock.getLocation();
+                
+        for (CuboidRegion thisRegion : regions) {
+            if (thisRegion.isInThisRegion(blockLocation)) {                                               
+                return thisRegion;
+            }
+        }
+        return null;
+    }
+    
+    public static CuboidRegion getRegionHere(Location blockLocation) {
+        // Go through list of regions and check
+                
+        for (CuboidRegion thisRegion : regions) {
+            if (thisRegion.isInThisRegion(blockLocation)) {                                               
+                return thisRegion;
+            }
+        }
+        return null;
+    }
+    
      
     public static void listRegions(Player thePlayer) {
         BDLogging.sendPlayer(thePlayer, "All regions:");
@@ -241,7 +322,9 @@ public class CuboidRegionHandler {
         // Check for regions        
         for (CuboidRegion thisRegion : regions) {
             if (thisRegion.isInThisRegion(block.getLocation())) {
-                if (thisRegion.canDuplicate() == false) {
+            	if (thisRegion.getOwner().toLowerCase().contentEquals((player.getName().toLowerCase()))) {
+                	return true;
+                } else if (thisRegion.canDuplicate() == false) {
                     returnMe = false;
                 }
             }
@@ -261,7 +344,9 @@ public class CuboidRegionHandler {
         // Check for regions        
         for (CuboidRegion thisRegion : regions) {
             if (thisRegion.isInThisRegion(block.getLocation())) {
-                if (thisRegion.canDataCycle() == false) {
+            	if (thisRegion.getOwner().toLowerCase().contentEquals((player.getName().toLowerCase()))) {
+                	return true;
+                } else if (thisRegion.canDataCycle() == false) {
                     returnMe = false;
                 }
             }
@@ -280,7 +365,31 @@ public class CuboidRegionHandler {
         // Check for regions        
         for (CuboidRegion thisRegion : regions) {
             if (thisRegion.isInThisRegion(block.getLocation())) {
-                if (thisRegion.canStorePaint() == false) {
+            	if (thisRegion.getOwner().toLowerCase().contentEquals((player.getName().toLowerCase()))) {
+                	return true;
+                } else if (thisRegion.canStorePaint() == false) {
+                    returnMe = false;
+                }
+            }
+        }
+        
+        return returnMe;         
+    }
+    
+    public static boolean canBreakBlocksHere(Player player, Block block) {
+        boolean returnMe = true;        
+        // Check for ignore permission
+        if (BDPermissions.ignoresRegions(player)) {
+            return true;
+        }
+        
+        // Check for regions        
+        for (CuboidRegion thisRegion : regions) {
+            if (thisRegion.isInThisRegion(block.getLocation())) {
+            	
+            	if (thisRegion.getOwner().toLowerCase().contentEquals((player.getName().toLowerCase()))) {
+                	return true;
+                } else if (thisRegion.canBreakBlocks() == false) {
                     returnMe = false;
                 }
             }
@@ -299,7 +408,9 @@ public class CuboidRegionHandler {
         // Check for regions        
         for (CuboidRegion thisRegion : regions) {
             if (thisRegion.isInThisRegion(block.getLocation())) {
-                if (thisRegion.canApplyPaint() == false) {
+            	if (thisRegion.getOwner().toLowerCase().contentEquals((player.getName().toLowerCase()))) {
+                	return true;
+                } else if (thisRegion.canApplyPaint() == false) {
                     returnMe = false;
                 }
             }

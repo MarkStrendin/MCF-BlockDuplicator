@@ -91,12 +91,6 @@ public class BlockDuplicator extends JavaPlugin {
                 } else {                    
                     BDLogging.permDenyMsg(requestplayer);
                 }  
-            } else if (commandLabel.equalsIgnoreCase("datatool")) {                
-                if (BDPermissions.canUseDataTool(requestplayer)) {
-                    BDCommands.givePlayerDataTool(requestplayer);
-                } else {                    
-                    BDLogging.permDenyMsg(requestplayer);
-                }  
             } else if ((commandLabel.equalsIgnoreCase("paintbrush")) || (commandLabel.equalsIgnoreCase("painter"))) {                
                 if (BDPermissions.canUsePaintbrushTool(requestplayer)) {
                     BDCommands.givePlayerPaintbrushTool(requestplayer);
@@ -104,21 +98,18 @@ public class BlockDuplicator extends JavaPlugin {
                     BDLogging.permDenyMsg(requestplayer);
                 }               
             } else if ((commandLabel.equalsIgnoreCase("bdtools")) || (commandLabel.equalsIgnoreCase("bdt")) || (commandLabel.equalsIgnoreCase("tools"))) {                
-                if (BDPermissions.canUsePaintbrushTool(requestplayer)) {
-                    BDCommands.givePlayerPaintbrushTool(requestplayer);
-                }
-                
-                if (BDPermissions.canUseDataTool(requestplayer)) {
-                    BDCommands.givePlayerDataTool(requestplayer);
-                }
-                
-                if (BDPermissions.canUseDuplicatorTool(requestplayer)) {
+            	if (BDPermissions.canUseDuplicatorTool(requestplayer)) {
                     BDCommands.givePlayerDuplicatorTool(requestplayer);
+                }
+            	
+            	if (BDPermissions.canUsePaintbrushTool(requestplayer)) {
+                    BDCommands.givePlayerPaintbrushTool(requestplayer);
                 }
                 
                 if (BDPermissions.canManageRegions(requestplayer)) {
                     BDCommands.givePlayerRegionTool(requestplayer);
-                }
+                } 
+                
             } else if ((commandLabel.equalsIgnoreCase("blockduplicator")) || (commandLabel.equalsIgnoreCase("bdreload"))) {
                 if (BDPermissions.canReload(requestplayer)) {
                     // Try to reload the config file
@@ -162,59 +153,26 @@ public class BlockDuplicator extends JavaPlugin {
     
         configSettings.load(fs);
         
-        int givenDuplicatorToolID = BDCommands.DuplicatorTool;
-        int givenPaintBrushToolID = BDCommands.PaintBrushTool;
-        int givenDataToolID = BDCommands.DataTool;
+        int givenDuplicatorToolID = BDCommands.duplicatorToolID;
+        int givenPaintBrushToolID = BDCommands.paintBrushToolID;
+        int givenRegionToolID = BDCommands.regionToolID;
         
-        // Default duplicator tool ID is 275
         try {
-            givenDuplicatorToolID = Integer.parseInt(configSettings.getProperty("duplicatortoolid","275").trim());
+            givenDuplicatorToolID = Integer.parseInt(configSettings.getProperty("duplicatortoolid","" + BDCommands.duplicatorToolID).trim());
         } catch (Exception e) { BDLogging.logThis("duplicatortoolid was set to an insane value - check your config file"); }
         
-        // Default paint brush tool is 341
         try {
-            givenPaintBrushToolID = Integer.parseInt(configSettings.getProperty("paintbrushtoolid","341").trim());
+            givenPaintBrushToolID = Integer.parseInt(configSettings.getProperty("paintbrushtoolid","" + BDCommands.paintBrushToolID).trim());
         } catch (Exception e) { BDLogging.logThis("paintbrushtoolid was set to an insane value - check your config file"); }
         
-        
-        // Default data tool is 352
         try {
-            givenDataToolID = Integer.parseInt(configSettings.getProperty("datatoolid","352").trim());
-        } catch (Exception e) { BDLogging.logThis("datatoolid was set to an insane value - check your config file"); }
+        	givenRegionToolID = Integer.parseInt(configSettings.getProperty("regiontoolid","" + BDCommands.regionToolID).trim());
+        } catch (Exception e) { BDLogging.logThis("regioninfoid was set to an insane value - check your config file"); }
         
-       
-        /*
-         * If the tools are set to the same item, use defaults instead
-         * 
-         */
+        BDCommands.duplicatorToolID = givenDuplicatorToolID;
+        BDCommands.paintBrushToolID = givenPaintBrushToolID;
+        BDCommands.regionToolID = givenRegionToolID;
         
-        if (givenPaintBrushToolID == givenDuplicatorToolID) {
-            BDLogging.logThis("Paintbrush tool and duplicator tool cannot be set to the same item");
-            BDLogging.logThis(" using "+BDCommands.PaintBrushTool+" for paintbrush tool");
-            givenPaintBrushToolID = BDCommands.PaintBrushTool;
-            BDLogging.logThis(" using "+BDCommands.DuplicatorTool+" for duplicator tool");
-            givenDuplicatorToolID = BDCommands.DuplicatorTool;            
-        }
-        
-        if (givenPaintBrushToolID == givenDataToolID) {
-            BDLogging.logThis("Paintbrush tool and data tool cannot be set to the same item");
-            BDLogging.logThis(" using "+BDCommands.PaintBrushTool+" for paintbrush tool");
-            givenPaintBrushToolID = BDCommands.PaintBrushTool;
-            BDLogging.logThis(" using "+BDCommands.DataTool+" for data tool");
-            givenDataToolID = BDCommands.DataTool;            
-        }
-        
-        if (givenDuplicatorToolID == givenDataToolID) {
-            BDLogging.logThis("Duplicator tool and data tool cannot be set to the same item");
-            BDLogging.logThis(" using "+BDCommands.DuplicatorTool+" for duplicator tool");
-            givenDuplicatorToolID = BDCommands.DuplicatorTool;
-            BDLogging.logThis(" using "+BDCommands.DataTool+" for data tool");
-            givenDataToolID = BDCommands.DataTool;                        
-        }
-        
-        BDCommands.DuplicatorTool = givenDuplicatorToolID;
-        BDCommands.PaintBrushTool = givenPaintBrushToolID;
-        BDCommands.DataTool = givenDataToolID;               
         
         /*
          * 7 - bedrock
@@ -222,8 +180,9 @@ public class BlockDuplicator extends JavaPlugin {
          * 10,11 - lava
          * 51 - fire (if you can figure out a way to duplicate it in the first place)
          * 79 - ice (because I hate cleaning up after this when people break the blocks)
+         * 
          */
-        String defaultDeniedBlocks = "7,8,9,10,11,51,52,79";
+        String defaultDeniedBlocks = "7,8,9,10,11,46,51,52,79";
         
         // Parse the item blacklist
         String splitMe = configSettings.getProperty("blacklist",defaultDeniedBlocks); 

@@ -22,13 +22,6 @@ public class BDPermissions {
     }
 
     /*
-     * Access to the data-cycler capabilities of the duplicator tool
-     */
-    public static boolean canUseDataTool(Player player) {
-        return hasPermission(player,"blockduplicator.tools.data",true);
-    }
-    
-    /*
      * Access to the duplicator tool
      */
     public static boolean canUseDuplicatorTool(Player player) {
@@ -40,6 +33,13 @@ public class BDPermissions {
      */
     public static boolean canUsePaintbrushTool(Player player) {
         return hasPermission(player,"blockduplicator.tools.paintbrush",true);
+    }
+    
+    /*
+     * Access to the info tool
+     */
+    public static boolean canUseInfoTool(Player player) {
+        return hasPermission(player,"blockduplicator.tools.info",true);
     }
     
     /*

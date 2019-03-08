@@ -12,6 +12,11 @@ public class CuboidRegion implements Serializable {
     private boolean bCanDataCycle;
     private boolean bCanStorePaint;
     private boolean bCanApplyPaint;
+    private boolean bCanBreakBlocks;
+    private boolean bCanExplode;
+    private boolean bCanEnemiesSpawnHere;
+    private boolean bCanPlayersEnter;
+    private boolean bAnnounceOnEnter;    
     private int iHighX;
     private int iHighY;
     private int iHighZ;
@@ -46,7 +51,7 @@ public class CuboidRegion implements Serializable {
     }
     
     public String toString() {
-        return "Region "+sName+" ("+iHighX+","+iHighY+","+iHighZ+") ("+iLowX+","+iLowY+","+iLowZ+") Owner: "+sOwner+" Flags: "+bCanDuplicate+"," + bCanDataCycle + "," + bCanStorePaint + "," + bCanApplyPaint;        
+        return "Region "+sName+" ("+iHighX+","+iHighY+","+iHighZ+") ("+iLowX+","+iLowY+","+iLowZ+") Owner: "+sOwner;        
     }
     
     public String getOwner() {
@@ -58,7 +63,7 @@ public class CuboidRegion implements Serializable {
     }
     
     public String getCoordinateString() {
-        return "("+iHighX+","+iHighY+","+iHighZ+") to ("+iLowX+","+iLowY+","+iLowZ+")";        
+        return "("+iHighX+","+iHighY+","+iHighZ+") to ("+iLowX+","+iLowY+","+iLowZ+") in \"" + sWorld + "\"";        
     }
     
     public boolean canDuplicate() {
@@ -69,6 +74,22 @@ public class CuboidRegion implements Serializable {
         return bCanDataCycle;
     }
     
+    public boolean canBreakBlocks() {
+    	return bCanBreakBlocks;
+    }
+    
+    public boolean canEnemyMobsSpawnHere() {
+    	return bCanEnemiesSpawnHere;
+    }
+    
+    public boolean canPlayersEnter() {
+    	return bCanPlayersEnter;
+    }
+    
+    public boolean canExplode() {
+    	return bCanExplode;
+    }
+    
     public boolean canStorePaint() {
         return bCanStorePaint;
     }
@@ -77,12 +98,32 @@ public class CuboidRegion implements Serializable {
         return bCanApplyPaint;
     }
     
+    public boolean canAnnounceOnEnter() {
+    	return bAnnounceOnEnter;
+    }
+    
     public String getName() {
         return sName;
     }
     
+    public void setCanEnemyMobsSpawnHere(boolean value) {
+        bCanEnemiesSpawnHere = value;        
+    }
+    
+    public void setCanPlayersEnter(boolean value) {
+        bCanPlayersEnter = value;        
+    }
+    
     public void setCanDuplicate(boolean value) {
         bCanDuplicate = value;        
+    }
+    
+    public void setCanBreakBlocks(boolean value) {
+    	bCanBreakBlocks = value;
+    }
+    
+    public void setCanExplode(boolean value) {
+    	bCanExplode = value;
     }
     
     public void setCanDataCycle(boolean value) {
@@ -95,6 +136,14 @@ public class CuboidRegion implements Serializable {
     
     public void setCanApplyPaint(boolean value) {
         bCanApplyPaint = value;
+    }
+    
+    public void setOwner(String newOwner) {
+    	sOwner = newOwner;
+    }
+    
+    public void setAnnounceOnEnter(boolean value) {
+    	bAnnounceOnEnter = value;
     }
     
     public CuboidRegion(String regionName, Player owner, CuboidPreRegion preRegion) {
@@ -110,6 +159,11 @@ public class CuboidRegion implements Serializable {
         bCanApplyPaint = false;
         bCanStorePaint = true;
         bCanDuplicate = true;
+        bCanBreakBlocks = false;
+        bCanExplode = false;
+        bCanEnemiesSpawnHere = true;
+        bCanPlayersEnter = true;
+        bAnnounceOnEnter = false; 
         
         // X
         if (preRegion.loc1.getBlockX() > preRegion.loc2.getBlockX()) {

@@ -2,6 +2,7 @@ package ca.strendin.Bukkit.BlockDuplicator;
 
 import java.util.Hashtable;
 
+import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -20,20 +21,21 @@ public class BDTool {
     public final static void dataSetterHandler(Player player, Block block) {
         
         if (BDCommands.isPaintableBlock(block)) {
-        
-            if (PlayerBlockStorage.containsKey(player)) {
-                PlayerBlockStorage.remove(player);            
-            }
-            
-            PlayerBlockStorage.put(player, block);
-            
-            BDLogging.logThis(player.getDisplayName() + " set their ink to " + block.getType() + " with data value " + block.getData());
-            BDLogging.sendPlayer(player,"Ink set to: " + BDLogging.itemColor + block.getType());
+        	if (!BDCommands.isItemOnBlacklist(block)) {        
+	            if (PlayerBlockStorage.containsKey(player)) {
+	                PlayerBlockStorage.remove(player);            
+	            }
+	            
+	            PlayerBlockStorage.put(player, block);
+	            
+	            BDLogging.logThis(player.getDisplayName() + " set their ink to " + block.getType() + " with data value " + block.getData());
+	            BDLogging.sendPlayer(player,"Ink set to: " + BDLogging.itemColor + block.getType());
+	        } else {
+	            BDLogging.sendPlayerError(player, "Sorry, that block cannot be copied (blacklisted)");
+	        }
         } else {
-            BDLogging.sendPlayerError(player, "Sorry, that block cannot be copied");
+            BDLogging.sendPlayerError(player, "Sorry, that block cannot be copied (unsafe)");
         }
-        
-    
     }
     
     
@@ -48,92 +50,54 @@ public class BDTool {
              * 
              */
             
-            if (BDCommands.isPaintableBlock(block)) {            
-                Block copiedBlock = PlayerBlockStorage.get(player);
-                
-                if (BDCommands.isPaintableBlock(copiedBlock)) {
-                    /*
-                    player.sendMessage("Would set this block to:");
-                    player.sendMessage(" ID: " + copiedBlock.getType());
-                    player.sendMessage(" Name: " + copiedBlock.getTypeId());
-                    player.sendMessage(" Data: " + copiedBlock.getData());
-                    player.sendMessage(" HashTable size: " + PlayerBlockStorage.size());
-                    */
-                    block.setType(copiedBlock.getType());
-                    block.setData(copiedBlock.getData());
-                }
+        	
+            if (BDCommands.isPaintableBlock(block)) {
+            	if (!BDCommands.isItemOnBlacklist(block)) {
+	                Block copiedBlock = PlayerBlockStorage.get(player);
+	                
+	                if (BDCommands.isPaintableBlock(copiedBlock)) {
+	                    block.setType(copiedBlock.getType());
+	                    block.setData(copiedBlock.getData());
+	                }
+            	} else {
+            		BDLogging.sendPlayerError(player, "Sorry, that block cannot be overwritten with this tool (blacklisted)");
+            	}
             } else {
-                BDLogging.sendPlayerError(player, "Sorry, that block cannot be overwritten with this tool");                
+            	BDLogging.sendPlayerError(player, "Sorry, that block cannot be overwritten with this tool (unsafe)");                
             }
             
         } else {
             BDLogging.sendPlayerError(player,"No data saved for you yet!");
-        }
-
-
-        
-        
-        
+        }        
     }
     
-    public final static void dataToolHandler(Player player, Block block) {
-        dataToolHandler(player,block,false);
+    private final static String boolToYesOrNo(boolean thisBool) {
+    	if (thisBool) {
+    		return "Yes";    		
+    	} else {
+    		return "No";
+    	}
     }
     
-    
-    public final static void dataToolHandler(Player player, Block block, boolean reverse) {
-        //cBlock blockHit = event.getBlock();
-        
-        // Check if this is a block that we want to modify
-        
-        int MaxData = -1;
-        switch (block.getTypeId()) {
-        case 44: MaxData = 5; break;    // Double steps
-        case 43: MaxData = 5; break;    // Single steps
-        case 17: MaxData = 2; break;    // Logs
-        case 35: MaxData = 15; break;   // Wool
-        case 53: MaxData = 3; break;    // Wooden stairs
-        case 67: MaxData = 3; break;    // Cobblestone stairs
-        case 18: MaxData = 3; break;    // Leaves
-        case 86: MaxData = 3; break;    // Pumpkins (changes direction)
-        case 91: MaxData = 3; break;    // Jack-o-lanterns (changes direction)
-        case 6: MaxData = 3; break;     // Saplings
-        case 31: MaxData = 2; break;     // Tall Grass         
-        case 108: MaxData = 3; break; /* Brick Stairs */
-        case 109: MaxData = 3; break; /* Stone Brick Stairs */
-        case 98: MaxData = 3; break; /* Stone Brick */
-        case 118: MaxData = 3; break; /* Cauldron */ 
-        case 99: MaxData = 10; break; /* Huge brown mushroom */
-        case 100: MaxData = 10; break; /* Huge red mushroom */        
-        }
-        
-        // If the block ID was on the list, go ahead and cycle it's data
-        if (MaxData >= 0) {
-            int setDataTo = block.getData();
-            
-            if (reverse) {
-                setDataTo--;                            
-            } else {
-                setDataTo++;                
-            }
-            
-            if (setDataTo > MaxData) {
-                setDataTo = 0;
-            }
-            
-            if (setDataTo < 0) {
-                setDataTo = MaxData;
-            }
-            
-            byte setDataToByte = (byte) (setDataTo & 0xFF);         
-            
-            //thePlayer.sendMessage("Setting data to " + setDataTo + "(" + setDataToByte + "/" + MaxData  + ")");
-            block.setData(setDataToByte);
-        }
+    public final static void infoToolHere(Player player, Block block) {
+    	try {
+	    	BDLogging.sendPlayer(player, "Info for block at " + block.getX() + "," + block.getY() + "," + block.getZ());    	
+	    	BDLogging.sendPlayer(player, " Block name: " + ChatColor.WHITE + block.getType().name());
+	    	BDLogging.sendPlayer(player, " Block type id: " + ChatColor.WHITE + block.getTypeId());
+	    	BDLogging.sendPlayer(player, " Block data value: " + ChatColor.WHITE + block.getData());
+	    	BDLogging.sendPlayer(player, " Flamable: " +ChatColor.WHITE + boolToYesOrNo(block.getType().isFlammable()));
+	    	BDLogging.sendPlayer(player, " Paint tool safe: " + ChatColor.WHITE + boolToYesOrNo(BDCommands.isPaintableBlock(block)));
+	    	BDLogging.sendPlayer(player, " Duplicator tool safe: " + ChatColor.WHITE + boolToYesOrNo(BDCommands.isDuplicatableBlock(block)));
+	    	BDLogging.sendPlayer(player, " Blacklisted: " + ChatColor.WHITE + boolToYesOrNo(BDCommands.isItemOnBlacklist(block)));
+	    	
+    	} catch (Exception ex) {
+    		BDLogging.sendPlayerError(player, "Error retreiving block data");    		
+    	}
     }
+    
     
     @SuppressWarnings("deprecation")
-    public final static void duplicatorToolHandler(Player player, Block block) {
+	public final static void duplicatorToolHandler(Player player, Block block) {
         //Block blockHit = event.getBlock();
         
         // Translate the ID of the block that was hit into the item number that we want to give the player
@@ -144,21 +108,26 @@ public class BDTool {
             BDLogging.sendPlayerError(player,"Your inventory is full!");             
         } else {
             // Check if this item is allowed to be duplicated
-            if (BDCommands.ThisItemAllowed(block.getTypeId())) {
-                
-                ItemStack tobegiven = new ItemStack(giveThisItemID);
-                tobegiven.setAmount(64);
-                if (BDCommands.isItemWithDataValue(giveThisItemID)) {
-                    tobegiven.setDurability(block.getData());                        
-                }
-                
-                //tobegiven.setData(blockHit.getData());
-                
-                BDCommands.giveStack(player,tobegiven);
-                player.updateInventory();                    
-            } else {
-                BDLogging.sendPlayerError(player,"Duplicating that block is not allowed");
+        	if (BDCommands.isDuplicatableBlock(block)) {
+        		if (!BDCommands.isItemOnBlacklist(block)) {
+                    
+                    ItemStack tobegiven = new ItemStack(giveThisItemID);
+                    tobegiven.setAmount(64);
+                    if (BDCommands.isItemWithDataValue(giveThisItemID)) {
+                        tobegiven.setDurability(block.getData());                        
+                    }
+                    
+                    //tobegiven.setData(blockHit.getData());
+                    
+                    BDCommands.giveStack(player,tobegiven);
+                    player.updateInventory();                    
+                } else {
+                    BDLogging.sendPlayerError(player,"Duplicating that block is not allowed (blacklisted)");
+                }        		
+        	} else {
+                BDLogging.sendPlayerError(player,"Duplicating that block is not allowed (unsafe)");
             }
+            
             
         }
         
